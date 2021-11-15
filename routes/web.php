@@ -20,7 +20,11 @@ Route::get('/game', function () {
 })->middleware(['auth'])->name('game');
 
 Route::get('/profile/{id}', [UserController::class, 'show'])->
-middleware('auth')->name('profile');
+middleware(['auth'])->name('profile');
+
+Route::get('/admin', function () {
+    return view('adminPanel');
+})->middleware('admin')->name('adminPanel');
 
 require __DIR__.'/auth.php';
 

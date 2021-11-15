@@ -16,13 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create();
+        //User::factory(10)->create();
         User::factory()->create([
            'name' => 'Andriy',
            'email' => 'limertoy@ukr.net',
            'password' => '$2y$10$Hc0Gp5j0Yn5SKycPdTicCOgc/k/eVR.jliaoRRiWdSdUD79LPPKSK',
             'is_admin' => true,
         ]);
+        User::factory()->create([
+            'name' => 'Limertoy',
+            'email' => 'adamovich_avav@ukr.net',
+            'password' => '$2y$10$Hc0Gp5j0Yn5SKycPdTicCOgc/k/eVR.jliaoRRiWdSdUD79LPPKSK'
+        ]);
+
 
         $this->call(PropertiesSeeder::class);
         $this->call(ItemsSeeder::class);
