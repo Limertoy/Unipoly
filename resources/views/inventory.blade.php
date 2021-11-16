@@ -19,7 +19,7 @@
                     <h5>Twoje przedmioty:</h5><br>
                     @forelse($items as $item)
                     <div class="item-cell">
-                        <div class="item-screen"></div>
+                        <div class="item-screen"><img style="width: 148px;" src="{{ $item->img }}"></div>
                         <div class="item-name {{ $item->rarity }}">{{ $item->name }}</div>
                     </div>
                     @empty

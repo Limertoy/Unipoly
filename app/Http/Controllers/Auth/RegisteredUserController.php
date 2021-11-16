@@ -57,6 +57,15 @@ class RegisteredUserController extends Controller
             'updated_at' => now(),
         ]);
 
+
+
+        foreach ()
+
+        DB::table('user_missions')->insert([
+            'mission_id' =>
+            'user_id' => Auth::id();
+
+        ])
         return redirect(RouteServiceProvider::HOME);
     }
 }
