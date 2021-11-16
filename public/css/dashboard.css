@@ -1,0 +1,10 @@
+.missions {
+    width: 100%;
+    border-radius: 6px;
+    color: lightblue;
+}
+
+.missions::-moz-progress-bar {
+    background: darkgreen;
+    border-radius: 6px;
+}

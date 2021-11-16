@@ -1,16 +1,17 @@
 <?php
 
+
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventoryController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'show'])->
+middleware(['auth'])->name('dashboard');
 
 Route::get('/inventory', [InventoryController::class, 'show'])->
 middleware(['auth'])->name('inventory');

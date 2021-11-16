@@ -58,14 +58,14 @@ class RegisteredUserController extends Controller
         ]);
 
 
+        $missions = DB::table('missions')->get();
 
-        foreach ()
-
-        DB::table('user_missions')->insert([
-            'mission_id' =>
-            'user_id' => Auth::id();
-
-        ])
+        foreach ($missions as $mission) {
+            DB::table('users_missions')->insert([
+                'mission_id' => $mission->id,
+                'user_id' => Auth::id(),
+            ]);
+        }
         return redirect(RouteServiceProvider::HOME);
     }
 }

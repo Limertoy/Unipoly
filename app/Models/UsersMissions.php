@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static create()
+ */
 class UsersMissions extends Model
 {
     use HasFactory;
@@ -12,17 +15,20 @@ class UsersMissions extends Model
     protected $fillable = [
         'user_id',
         'mission_id',
+        'actual',
     ];
 
     protected $attributes = [
         'is_done' => false,
     ];
 
-    public function user(){
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function mission(){
+    public function missions(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Missions::class, 'mission_id');
     }
 }

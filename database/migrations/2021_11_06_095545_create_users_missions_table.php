@@ -17,8 +17,8 @@ class CreateUsersMissionsTable extends Migration
             $table->id();
             $table->foreignId('mission_id')->references('id')->on('missions')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('actual');
-            $table->boolean('is_done');
+            $table->integer('actual')->default('0');
+            $table->boolean('is_done')->default('0');
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Missions;
 use App\Models\Properties;
+use App\Models\UsersMissions;
 use Illuminate\Database\Seeder;
 use \App\Models\User;
 
@@ -33,5 +34,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PropertiesSeeder::class);
         $this->call(ItemsSeeder::class);
         $this->call(MissionsSeeder::class);
+        $this->call(UsersMissionsSeeder::class);
     }
 }
