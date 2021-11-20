@@ -21,10 +21,17 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $guarded = [
+        'is_muted',
+        'is_admin',
+        'is_moderator'
+    ];
+
     protected $attributes = [
         'is_muted' => false,
         'is_admin' => false,
         'is_moderator' => false,
+        'is_banned' => false,
     ];
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\UserController;
@@ -26,6 +27,10 @@ middleware(['auth'])->name('profile');
 Route::get('/admin', function () {
     return view('adminPanel');
 })->middleware('admin')->name('adminPanel');
+
+Route::get('/messages', [ChatController::class, 'fetchMessages'])->middleware('auth');
+
+Route::post('/messages', [ChatController::class, 'sendMessage'])->middleware('auth');
 
 require __DIR__.'/auth.php';
 
