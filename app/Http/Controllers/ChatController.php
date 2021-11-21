@@ -6,6 +6,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Events\MessageSent;
 
 class ChatController extends Controller
 {
@@ -29,5 +30,6 @@ class ChatController extends Controller
             where('user_id', Auth::id())->
             update(['messages_sent' => $stats]);
 
+        broadcast(new MessageSent($user, $message))->toOthers();
     }
 }

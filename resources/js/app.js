@@ -6,9 +6,6 @@ require('./bootstrap');
 
 require('phaser');
 
-// Vue.component('chat-messages', require('./components/ChatMessages'));
-// Vue.component('chat-form', require('./components/ChatForm'));
-
 const app = new Vue({
     components: {
         'chat-messages': ChatMessages,
@@ -20,6 +17,14 @@ const app = new Vue({
     },
     created() {
         this.fetchMessages();
+
+        window.Echo.private('chat')
+            .listen('MessageSent', (e) => {
+                this.messages.push({
+                    message: e.message.message,
+                    user: e.user
+                });
+            });
     },
     methods: {
         fetchMessages() {

@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('avatar')->default('/img/avatars/default_avatar.jpg');
             $table->boolean('is_admin')->default('0');
             $table->boolean('is_muted')->default('0');
             $table->boolean('is_moderator')->default('0');

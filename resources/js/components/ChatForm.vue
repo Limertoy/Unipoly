@@ -1,12 +1,10 @@
 <template>
 <div class="input-group">
-    <input id="btn-input" type="text" name="message" class="form-control input-group-sm" placeholder="Napisz powiadomienie..."
+    <input id="btn-input" type="text" name="message" class="form-control write-message" placeholder="Napisz powiadomienie..."
            v-model="newMessage" @keyup.enter="sendMessage"/>
-    <span class="input-group">
-        <button class="btn btn-dark btn-sm" id="btn-chat" @click="sendMessage">
+        <button class="btn btn-dark" id="btn-chat" @click="sendMessage">
             Wyślij
         </button>
-    </span>
 </div>
 </template>
 

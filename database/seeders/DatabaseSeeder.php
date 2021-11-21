@@ -49,5 +49,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ItemsSeeder::class);
         $this->call(MissionsSeeder::class);
         $this->call(UsersMissionsSeeder::class);
+        $this->call(StatsSeeder::class);
     }
 }
