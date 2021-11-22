@@ -38,7 +38,8 @@
                         @php
                             $timenow = \Carbon\Carbon::now()->locale('pl_PL');
                         @endphp
-                        <strong>Dzisiaj: {{ $timenow->isoFormat('dddd, Do MMMM YY') }}</strong>
+                        <strong>Dzisiaj: {{ $timenow->isoFormat('dddd, DD MMMM YYYY') }}</strong><br>
+                        <strong>Informacja: </strong><strong style="color: red">strona działa w reżymie testowania</strong>
                     </div>
                 </div>
                 <br>

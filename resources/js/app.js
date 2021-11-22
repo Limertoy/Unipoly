@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import ChatMessages from "./components/ChatMessages";
 import ChatForm from "./components/ChatForm";
+import LobbyCreate from "./components/LobbyCreate";
 
 require('./bootstrap');
 
@@ -9,11 +10,13 @@ require('phaser');
 const app = new Vue({
     components: {
         'chat-messages': ChatMessages,
-        'chat-form': ChatForm
+        'chat-form': ChatForm,
+        'lobby-create': LobbyCreate
     },
     el: '#app',
     data: {
-        messages: []
+        messages: [],
+        lobby: []
     },
     created() {
         this.fetchMessages();
@@ -39,6 +42,13 @@ const app = new Vue({
             this.messages.push(message);
 
             axios.post('/messages', message).then(response => {
+                console.log(response.data);
+            }).catch((err) => console.log(err));
+        },
+        addLobby(lobby){
+            this.lobby.push(lobby);
+
+            axios.post('/lobbies', lobby).then(response => {
                 console.log(response.data);
             }).catch((err) => console.log(err));
         }

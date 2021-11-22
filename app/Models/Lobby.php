@@ -17,6 +17,10 @@ class Lobby extends Model
         'winner_id',
     ];
 
+    protected $attributes = [
+        'is_started' => false,
+    ];
+
     protected $hidden = [
         'token',
     ];

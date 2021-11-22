@@ -4,6 +4,7 @@
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,12 @@ Route::get('/admin', function () {
 Route::get('/messages', [ChatController::class, 'fetchMessages'])->middleware('auth');
 
 Route::post('/messages', [ChatController::class, 'sendMessage'])->middleware('auth');
+
+Route::get('/lobbies', [LobbyController::class, 'show'])->middleware('auth')->name('lobbies');
+
+Route::post('/lobbies', [LobbyController::class, 'createLobby'])->middleware('auth');
+
+Route::put('/lobbies', [LobbyController::class, 'joinToLobby'])->middleware('auth');
 
 require __DIR__.'/auth.php';
 
