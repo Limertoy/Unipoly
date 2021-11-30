@@ -2,6 +2,9 @@ import Vue from 'vue'
 import ChatMessages from "./components/ChatMessages";
 import ChatForm from "./components/ChatForm";
 import LobbyCreate from "./components/LobbyCreate";
+import LobbyJoin from "./components/LobbyJoin";
+import LobbyShow from "./components/LobbyShow";
+import axios from "axios";
 
 require('./bootstrap');
 
@@ -11,7 +14,9 @@ const app = new Vue({
     components: {
         'chat-messages': ChatMessages,
         'chat-form': ChatForm,
-        'lobby-create': LobbyCreate
+        'lobby-create': LobbyCreate,
+        'lobby-join': LobbyJoin,
+        'lobby-show': LobbyShow
     },
     el: '#app',
     data: {
@@ -20,6 +25,7 @@ const app = new Vue({
     },
     created() {
         this.fetchMessages();
+        this.fetchLobbies();
 
         window.Echo.private('chat')
             .listen('MessageSent', (e) => {
@@ -28,14 +34,29 @@ const app = new Vue({
                     user: e.user
                 });
             });
+
+        window.Echo.private('lobbies')
+            .listen('LobbyCreated', (e) => {
+               this.lobby.push({
+                   lobby: e.lobby.id,
+                   user: e.user
+               })
+            });
+
     },
     methods: {
         fetchMessages() {
 
             axios.get('/messages').then(response => {
-
                 this.messages = response.data;
             }).catch((err) => console.log(err));
+        },
+        fetchLobbies(){
+
+            axios.get('/lobbies/get').then(response => {
+                this.lobby = response.data;
+            }).catch((err) => console.log(err));
+
         },
         addMessage(message) {
 
@@ -49,6 +70,13 @@ const app = new Vue({
             this.lobby.push(lobby);
 
             axios.post('/lobbies', lobby).then(response => {
+                console.log(response.data);
+            }).catch((err) => console.log(err));
+        },
+        joinLobby(lobby) {
+            this.lobby.push(lobby);
+
+            axios.put('/lobbies', lobby).then(response => {
                 console.log(response.data);
             }).catch((err) => console.log(err));
         }

@@ -35,6 +35,8 @@ Route::post('/messages', [ChatController::class, 'sendMessage'])->middleware('au
 
 Route::get('/lobbies', [LobbyController::class, 'show'])->middleware('auth')->name('lobbies');
 
+Route::get('/lobbies/get', [LobbyController::class, 'fetchLobbies'])->middleware('auth');
+
 Route::post('/lobbies', [LobbyController::class, 'createLobby'])->middleware('auth');
 
 Route::put('/lobbies', [LobbyController::class, 'joinToLobby'])->middleware('auth');

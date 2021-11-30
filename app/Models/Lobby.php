@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static find()
+ * @method static where(string $string, string $str)
+ */
 class Lobby extends Model
 {
     use HasFactory;
@@ -15,6 +19,7 @@ class Lobby extends Model
         'user3_id',
         'user4_id',
         'winner_id',
+        'token'
     ];
 
     protected $attributes = [

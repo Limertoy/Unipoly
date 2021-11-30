@@ -19,7 +19,7 @@ export default {
         createLobby() {
             this.$emit("createlobby", {
                 user: this.user,
-                lobby: this.newLobby,
+                lobby: this.lobby,
             });
             this.newLobby = "";
         },
