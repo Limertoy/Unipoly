@@ -13,4 +13,5 @@
 <script src="{{ mix('js/app.js') }}"></script>
 @yield('link-script')
 </body>
+
 </html>

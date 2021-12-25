@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckAdmin
+class CheckModer
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->user()->is_admin)
-            return redirect('404');
-        else
+        if ($request->user()->is_admin || $request->user()->is_moder)
             return $next($request);
+        else
+            return redirect('404');
     }
 }

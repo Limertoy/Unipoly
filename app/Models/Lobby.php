@@ -18,7 +18,13 @@ class Lobby extends Model
         'user2_id',
         'user3_id',
         'user4_id',
+        'user1_left',
+        'user2_left',
+        'user3_left',
+        'user4_left',
         'winner_id',
+        'started_at',
+        'ended_at',
         'token'
     ];
 

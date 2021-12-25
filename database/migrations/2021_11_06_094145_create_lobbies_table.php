@@ -19,8 +19,14 @@ class CreateLobbiesTable extends Migration
             $table->foreignId('user2_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('user3_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('user4_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('user1_left')->default('0');
+            $table->boolean('user2_left')->default('0');
+            $table->boolean('user3_left')->default('0');
+            $table->boolean('user4_left')->default('0');
             $table->foreignId('winner_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->boolean('is_started')->default('0');
+            $table->bigInteger('started_at')->nullable();
+            $table->bigInteger('ended_at')->nullable();
             $table->string('token');
             $table->timestamps();
         });

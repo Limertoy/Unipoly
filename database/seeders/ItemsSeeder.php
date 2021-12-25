@@ -21,6 +21,7 @@ class ItemsSeeder extends Seeder
                 'type' => 'pawn',
                 'rarity' => 'ordinary',
                 'img' => '/img/triangle_pawn.png',
+                'shortname' => 'pawn_tri'
             ],
             [
                 'id' => 2,
@@ -28,6 +29,7 @@ class ItemsSeeder extends Seeder
                 'type' => 'pawn',
                 'rarity' => 'rare',
                 'img' => '/img/stars_pawn.png',
+                'shortname' => 'pawn_star'
             ],
             [
                 'id' => 3,
@@ -35,6 +37,7 @@ class ItemsSeeder extends Seeder
                 'type' => 'dice',
                 'rarity' => 'rare',
                 'img' => '/img/forest_dice.png',
+                'shortname' => 'dice_for'
             ],
             [
                 'id' => 4,
@@ -42,6 +45,7 @@ class ItemsSeeder extends Seeder
                 'type' => 'dice',
                 'rarity' => 'secret',
                 'img' => '/img/elegancy_dice.png',
+                'shortname' => 'dice_eleg'
             ],
             [
                 'id' => 5,
@@ -49,6 +53,7 @@ class ItemsSeeder extends Seeder
                 'type' => 'dice',
                 'rarity' => 'contraband',
                 'img' => '/img/spring_dice.png',
+                'shortname' => 'dice_spr'
             ],
             [
                 'id' => 6,
@@ -56,6 +61,23 @@ class ItemsSeeder extends Seeder
                 'type' => 'pawn',
                 'rarity' => 'secret',
                 'img' => '/img/silence_pawn.png',
+                'shortname' => 'pawn_sil'
+            ],
+            [
+                'id' => 7,
+                'name' => 'Pionek zwykły',
+                'type' => 'pawn',
+                'rarity' => 'default',
+                'img' => '/img/circle_pawn.png',
+                'shortname' => 'pawn_def'
+            ],
+            [
+                'id' => 8,
+                'name' => 'Kości zwykłe',
+                'type' => 'dice',
+                'rarity' => 'default',
+                'img' => '/img/white_dice.png',
+                'shortname' => 'dice_def'
             ],
         ];
         foreach ($items as $item){

@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @method static find()
+ * @method static where()
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;

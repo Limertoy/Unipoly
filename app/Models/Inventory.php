@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static where()
+ */
 class Inventory extends Model
 {
     use HasFactory;
@@ -13,6 +16,11 @@ class Inventory extends Model
     protected $fillable = [
         'user_id',
         'item_id',
+    ];
+
+    protected $attributes = [
+        'is_chosen_dice',
+        'is_chosen_pawn'
     ];
 
     public function user(){

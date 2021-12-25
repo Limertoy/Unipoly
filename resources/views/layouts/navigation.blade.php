@@ -31,7 +31,7 @@
                     {{ Auth::user()->name }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ route('profile', ['id' => 11] ) }}">{{ __('Profil') }}</a>
+                    <a class="dropdown-item" href="{{ route('profile', ['id' => Auth::id()] ) }}">{{ __('Profil') }}</a>
                     <div class="dropdown-divider"></div>
                     @if(Auth::user()->is_admin)
                         <a class="dropdown-item" href="{{ route('adminPanel') }}">{{ __('Panel Admina') }}</a>

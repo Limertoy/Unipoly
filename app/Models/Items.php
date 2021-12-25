@@ -17,6 +17,7 @@ class Items extends Model
         'type',
         'rarity',
         'img',
+        'shortname',
     ];
 
     public function mission(){
