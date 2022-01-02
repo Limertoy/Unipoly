@@ -26,7 +26,7 @@ Route::get('/game', function () {
     ->name('game');
 
 Route::get('/profile/{id}', [UserController::class, 'show'])
-    ->middleware(['auth'])
+    ->middleware('auth')
     ->name('profile');
 
 Route::get('/admin', [UserController::class, 'showPlayers'])
@@ -54,6 +54,18 @@ Route::put('/lobbies', [LobbyController::class, 'joinToLobby'])
 
 Route::put('/inventory', [InventoryController::class, 'changeActive'])
     ->middleware('auth')->name('inventory_put');
+
+Route::put('/profile/change', [UserController::class, 'changePassword'])
+    ->middleware('auth')
+    ->name('change_password');
+
+Route::get('/editProfile', function (){
+    return view('editProfile');
+})->middleware('auth');
+
+Route::put('/editProfile', [UserController::class, 'editProfile'])
+    ->middleware('auth')
+    ->name('edit_profile');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/adminPanel.php';

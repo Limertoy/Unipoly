@@ -1,12 +1,22 @@
 @extends('layouts.template')
 @section('title-text', 'Mój profile')
 
+@section('link-css')
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+@endsection
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Mój profil
         </h2>
     </x-slot>
+
+    @if($action != '')
+        <div class="alert alert-success" role="alert">
+            Dane zostały zmienone
+        </div>
+    @endif
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -15,7 +25,9 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-3">
-                                <img src="{{$user->avatar}}" style="border-radius: 20px">
+                                <div class="crop">
+                                    <img src="{{$user->avatar}}">
+                                </div>
                                 <p style="font-size: 30px">{{$user->name}}</p>
                             </div>
                             <div class="col-9" style="text-align: left; font-size: 15px">
@@ -27,19 +39,18 @@
                                 <p>Misji wykonano: {{$stats->missions_completed}}</p>
                                 <p>Powiadomień odesłano: {{$stats->messages_sent}}</p>
                                 <hr>
-                                <a class="btn btn-success">Edytuj profil</a>
+                                <a class="btn btn-success" href="/editProfile">Edytuj profil</a>
                                 <button class="btn btn-success" onclick="showForm()">Zmień hasło</button>
                                 <form id="change-password" method="POST" style="padding-top: 5px; display: none"
-                                      onsubmit="event.preventDefault(); checkPassword()"
-                                      action="{{route('change_password')}}">
+                                      onsubmit="checkPassword()"
+                                      action="{{route('change_password', ['id' => Auth::id()])}}">
                                     @method('PUT')
                                     @csrf
                                     <input style="border-radius: 10px" id="pswd1" type="password" name="password"
                                            placeholder="Wpisz nowe hasło..." required>
                                     <input style="border-radius: 10px" id="pswd2" type="password"
-                                           name="confirm-password"
                                            placeholder="Podtwierdź hasło..." required>
-                                    <button class="btn btn-outline-success">Zapisz</button>
+                                    <button class="btn btn-outline-success" type="submit">Zapisz</button>
                                     <p id="not-match" style="display: none; color: red">Hasła nie są takie same</p>
                                     <p id="too-small" style="display: none; color: red">Hasło nie może mieć mniej niż 8
                                         znaków</p>
@@ -76,17 +87,17 @@
                 document.getElementById('too-small').style.display = "block";
                 document.getElementById('too-big').style.display = "none";
                 document.getElementById('not-match').style.display = "none";
-                return false;
+                event.preventDefault();
             } else if (pw1.value.length > 20) {
                 document.getElementById('too-small').style.display = "none";
                 document.getElementById('too-big').style.display = "block";
                 document.getElementById('not-match').style.display = "none";
-                return false;
+                event.preventDefault();
             } else if (pw1.value != pw2.value) {
                 document.getElementById('too-small').style.display = "none";
                 document.getElementById('too-big').style.display = "none";
                 document.getElementById('not-match').style.display = "block";
-                return false;
+                event.preventDefault();
             } else {
                 document.getElementById('too-small').style.display = "none";
                 document.getElementById('too-big').style.display = "none";
@@ -97,5 +108,9 @@
                 return true;
             }
         }
+
+        setTimeout(function () {
+            $('.alert').alert('close');
+        }, 4000);
     </script>
 @endsection
