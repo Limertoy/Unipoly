@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserEditRequest;
+use App\Models\Friends;
 use App\Models\Stats;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,9 +30,15 @@ class UserController extends Controller
                 'action' => $request->action
             ]);
         } else {
+            $friend = Friends::where('user_id', Auth::id())
+                ->where('friend_id', $user->id)->first();
+
+            $friend ? $is_friends = true : $is_friends = false;
+
             return view('profile', [
                 'user' => $user,
-                'stats' => $stats
+                'stats' => $stats,
+                'is_friends' => $is_friends
             ]);
         }
     }

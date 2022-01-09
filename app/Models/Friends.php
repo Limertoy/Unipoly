@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static where()
+ * @method static join()
+ * @property int|mixed|string|null user_id
+ * @property mixed friend_id
+ */
 class Friends extends Model
 {
     use HasFactory;

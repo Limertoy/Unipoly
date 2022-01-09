@@ -13,13 +13,16 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Strona główna') }}
+                        Strona główna
                     </x-nav-link>
                     <x-nav-link :href="route('inventory')" :active="request()->routeIs('inventory')">
-                        {{ __('Inwentarz') }}
+                        Inwentarz
                     </x-nav-link>
                     <x-nav-link :href="route('lobbies')" :active="request()->routeIs('lobbies')">
-                        {{ __('Poczekalnie') }}
+                        Poczekalnie
+                    </x-nav-link>
+                    <x-nav-link :href="route('friends')" :active="request()->routeIs('friends')">
+                        Przyjaciele
                     </x-nav-link>
                 </div>
             </div>
@@ -31,10 +34,10 @@
                     {{ Auth::user()->name }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ route('profile', ['id' => Auth::id()] ) }}">{{ __('Profil') }}</a>
+                    <a class="dropdown-item" href="{{ route('profile', ['id' => Auth::id()] ) }}">Profil</a>
                     <div class="dropdown-divider"></div>
                     @if(Auth::user()->is_admin)
-                        <a class="dropdown-item" href="{{ route('adminPanel') }}">{{ __('Panel Admina') }}</a>
+                        <a class="dropdown-item" href="{{ route('adminPanel') }}">Panel Admina</a>
                         <div class="dropdown-divider"></div>
                     @endif
                     <a class="dropdown-item">
@@ -43,7 +46,7 @@
                             <x :href="route('logout')"
                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Wyloguj') }}
+                                Wyloguj
                             </x>
                         </form>
                     </a>

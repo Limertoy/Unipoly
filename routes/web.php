@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\UserController;
@@ -66,6 +67,22 @@ Route::get('/editProfile', function (){
 Route::put('/editProfile', [UserController::class, 'editProfile'])
     ->middleware('auth')
     ->name('edit_profile');
+
+Route::post('/addFriend', [FriendsController::class, 'addFriend'])
+    ->middleware('auth')
+    ->name('add_friend');
+
+Route::delete('/deleteFriend', [FriendsController::class, 'deleteFriend'])
+    ->middleware('auth')
+    ->name('delete_friend');
+
+Route::get('/friends', [FriendsController::class, 'showFriends'])
+    ->middleware('auth')
+    ->name('friends');
+
+Route::get('/addFriend', function () {
+    return view('addFriend');
+})->middleware('auth')->name('addFriend');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/adminPanel.php';
