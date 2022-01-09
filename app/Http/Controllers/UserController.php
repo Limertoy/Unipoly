@@ -145,7 +145,7 @@ class UserController extends Controller
 
 
         $imagename = Str::random(25);
-        if($request->avatar){
+        if ($request->avatar) {
             $imagename = $imagename . '.' . $request->avatar->getClientOriginalExtension();
             Storage::disk('avatar')->put($imagename, file_get_contents($request->avatar));
             $user->avatar = '/img/avatars/' . $imagename;

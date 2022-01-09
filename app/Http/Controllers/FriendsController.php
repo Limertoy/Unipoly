@@ -40,7 +40,10 @@ class FriendsController extends Controller
         $friends->save();
         $stats->save();
 
-        return Redirect::route('profile', ['id' => $request->id]);
+        if ($request->route == "add")
+            return Redirect::route('friends');
+        else
+            return Redirect::route('profile', ['id' => $request->id]);
     }
 
     public function deleteFriend(Request $request)
@@ -58,5 +61,27 @@ class FriendsController extends Controller
             return Redirect::route('friends');
         else
             return Redirect::route('profile', ['id' => $request->id]);
+    }
+
+    public function searchUser(Request $request)
+    {
+        $users = DB::table('users')
+            ->where('users.name', 'like', '%' . $request->input('search_request') . '%')
+            ->orWhere('users.email', 'like', '%' . $request->input('search_request') . '%')
+            ->get();
+
+        $friends = DB::table('friends')
+            ->where('friends.user_id', Auth::id())
+            ->get();
+
+        foreach ($users as $user)
+            foreach ($friends as $friend)
+                if ($user->id == $friend->friend_id)
+                    $users->forget($user);
+
+        return view('addFriend', [
+            'users' => $users,
+            'empty' => $users->isEmpty()
+        ]);
     }
 }

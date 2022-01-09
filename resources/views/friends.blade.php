@@ -16,7 +16,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <button class="btn btn-success">Dodaj nowego przyjaciela</button>
+                    <a href="{{route('addFriend')}}" class="btn btn-success">Dodaj nowego przyjaciela</a>
                 </div>
             </div><br>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -30,7 +30,7 @@
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="info container">
                             <img class="friend-avatar" src="{{$friend->avatar}}">
-                            <p class="friend-name">{{$friend->name}}</p>
+                            <a href="{{route('profile', ['id' => $friend->id])}}"><p class="friend-name">{{$friend->name}}</p></a>
                             <div class="right-info">
                                 <form method="POST" action="{{route('delete_friend')}}">
                                     @method('DELETE')

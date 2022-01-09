@@ -22,3 +22,7 @@
     float: right;
     text-align: right;
 }
+
+a, a:hover {
+    color: black;
+}

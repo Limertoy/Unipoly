@@ -81,8 +81,13 @@ Route::get('/friends', [FriendsController::class, 'showFriends'])
     ->name('friends');
 
 Route::get('/addFriend', function () {
-    return view('addFriend');
+    return view('addFriend', ['users' => null, 'empty' => false]);
 })->middleware('auth')->name('addFriend');
+
+
+Route::get('/addFriend/search', [FriendsController::class, 'searchUser'])
+    ->middleware('auth')
+    ->name('searchFriends');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/adminPanel.php';
