@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static create()
+ * @method static find(mixed $mission_id)
+ * @method static where()
  */
 class Missions extends Model
 {

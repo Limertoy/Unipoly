@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static where()
+ * @method static create()
  */
 class Inventory extends Model
 {
@@ -16,9 +17,6 @@ class Inventory extends Model
     protected $fillable = [
         'user_id',
         'item_id',
-    ];
-
-    protected $attributes = [
         'is_chosen_dice',
         'is_chosen_pawn'
     ];

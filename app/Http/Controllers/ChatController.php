@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\Stats;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,15 +21,10 @@ class ChatController extends Controller
             'message' => $request->input('message')
         ]);
 
-        $stats = DB::table('stats')->
-            where('user_id', Auth::id())->
-            value('messages_sent');
+        $stats = Stats::find(Auth::id());
 
-        $stats++;
-
-        DB::table('stats')->
-            where('user_id', Auth::id())->
-            update(['messages_sent' => $stats]);
+        $stats->messages_sent++;
+        $stats->save();
 
         broadcast(new MessageSent($user, $message))->toOthers();
     }

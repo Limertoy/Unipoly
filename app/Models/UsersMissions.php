@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static create()
+ * @method static where()
  */
 class UsersMissions extends Model
 {

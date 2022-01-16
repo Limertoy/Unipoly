@@ -65,23 +65,36 @@ class FriendsController extends Controller
 
     public function searchUser(Request $request)
     {
-        $users = DB::table('users')
-            ->where('users.name', 'like', '%' . $request->input('search_request') . '%')
-            ->orWhere('users.email', 'like', '%' . $request->input('search_request') . '%')
-            ->get();
+        if ($request->input('search_request') == "") {
+            return view('addFriend', [
+                'users' => null,
+                'empty' => true
+            ]);
+        } else {
 
-        $friends = DB::table('friends')
-            ->where('friends.user_id', Auth::id())
-            ->get();
+            $users = DB::table('users')
+                ->where('users.name', 'like', '%' . $request->input('search_request') . '%')
+                ->orWhere('users.email', 'like', '%' . $request->input('search_request') . '%')
+                ->get();
 
-        foreach ($users as $user)
-            foreach ($friends as $friend)
-                if ($user->id == $friend->friend_id)
+            $friends = DB::table('friends')
+                ->where('friends.user_id', Auth::id())
+                ->get();
+
+
+            foreach ($users as $user) {
+                foreach ($friends as $friend) {
+                    if ($user->id == $friend->friend_id)
+                        $users->forget($user);
+                }
+                if ($user->id == 1)
                     $users->forget($user);
+            }
 
-        return view('addFriend', [
-            'users' => $users,
-            'empty' => $users->isEmpty()
-        ]);
+            return view('addFriend', [
+                'users' => $users,
+                'empty' => $users->isEmpty()
+            ]);
+        }
     }
 }

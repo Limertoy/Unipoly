@@ -2,9 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Missions;
-use App\Models\Properties;
-use App\Models\UsersMissions;
 use Illuminate\Database\Seeder;
 use \App\Models\User;
 
@@ -22,12 +19,12 @@ class DatabaseSeeder extends Seeder
             'id' => 0,
             'name' => 'System',
             'email' => 'system@ukr.net',
-            'password' => 'абвгд'
+            'password' => 'абвгдeжзиіїйклмонпрстуфхцшщьюя'
         ]);
         User::factory()->create([
            'name' => 'Andriy',
            'email' => 'limertoy@ukr.net',
-           'password' => '$2y$10$Hc0Gp5j0Yn5SKycPdTicCOgc/k/eVR.jliaoRRiWdSdUD79LPPKSK',
+           'password' => '$2y$10$Hc0Gp5j0Yn5SKycPdTicCOgc/k/eVR.jliaoRRiWdSdUD79LPPKSK', //123123123
             'is_admin' => true,
         ]);
         User::factory()->create([
@@ -43,12 +40,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-
-
         $this->call(PropertiesSeeder::class);
         $this->call(ItemsSeeder::class);
         $this->call(MissionsSeeder::class);
         $this->call(UsersMissionsSeeder::class);
         $this->call(StatsSeeder::class);
+        $this->call(InventorySeeder::class);
     }
 }
