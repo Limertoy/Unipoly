@@ -98,13 +98,13 @@ p.square-name {
 
 
 /*Tokens*/
-.token {
+.items {
     float: left;
     position: absolute!important;
 }
 
 
-.Triangle {
+. {
     display: inline;
     width: 0;
     height: 0;

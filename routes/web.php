@@ -48,10 +48,10 @@ Route::get('/lobbies/get', [LobbyController::class, 'fetchLobbies'])
     ->middleware('auth');
 
 Route::post('/lobbies', [LobbyController::class, 'createLobby'])
-    ->middleware('auth');
+    ->middleware('auth')->name('createLobby');
 
 Route::put('/lobbies', [LobbyController::class, 'joinToLobby'])
-    ->middleware('auth');
+    ->middleware('auth')->name('joinToLobby');;
 
 Route::put('/inventory', [InventoryController::class, 'changeActive'])
     ->middleware('auth')->name('inventory_put');
@@ -89,6 +89,8 @@ Route::get('/addFriend/search', [FriendsController::class, 'searchUser'])
     ->middleware('auth')
     ->name('searchFriends');
 
+
+require __DIR__.'/game.php';
 require __DIR__.'/auth.php';
 require __DIR__.'/adminPanel.php';
 

@@ -25,6 +25,7 @@ class CreateLobbiesTable extends Migration
             $table->boolean('user4_left')->default('0');
             $table->foreignId('winner_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->boolean('is_started')->default('0');
+            $table->boolean('is_ended')->default('0');
             $table->bigInteger('started_at')->nullable();
             $table->bigInteger('ended_at')->nullable();
             $table->string('token');

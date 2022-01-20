@@ -8,24 +8,70 @@
         </h2>
     </x-slot>
 
-    <div class="py-12" id="app">
+    <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <lobby-create v-on:createlobby="addLobby" :user="{{Auth::user()}}"></lobby-create>
+                    <div class="input-group">
+                        <form method="POST" action="{{route('createLobby')}}">
+                            @method('POST')
+                            @csrf
+                            <button class="btn btn-lg btn-info" id="btn-chat" type="sumbit">
+                                Nowa poczekalnia
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <br>
             @forelse($lobbies as $lobby)
                 <div class="p-6 bg-white border-b border-gray-200 text-center">
-                    <lobby-show v-bind:lobby="{{$lobby->id}}"></lobby-show>
-                    <lobby-join v-on:joinLobby="joinLobby" :user="{{Auth::user()}}" :lobby="{{$lobby->id}}"></lobby-join>
+                    <div style="text-align: center">
+                        Poczekania numer #{{$lobby->id}}
+                    </div>
+                    <div class="input-group">
+                        <form method="POST">
+                            @method('PUT')
+                            @csrf
+                            <input type="hidden" name="lobby" value="{{$lobby->id}}">
+                            <button class="btn btn-lg btn-info" id="btn-chat" @click="joinLobby">
+                                Dołącz
+                            </button>
+                        </form>
+
+                    </div>
                 </div><br>
             @empty
                 <div class="p-6 bg-white border-b border-gray-200 text-center">
                     Nie ma stworzonych poczekalni
                 </div>
             @endforelse
+            <dialog id="lobby-exist" style="display: none; border-radius: 10px; border-color: gray; background-color: gainsboro;" open>
+                @if(session('alert') == 'lobby_exists')
+                    <p>Nie możesz stworzyć nowej poczekalni, ponieważ już jesteś w aktywnej. Wyjdź i spróbuj znowu.</p>
+                @elseif(session('alert')== 'places_taken')
+                    <p>Nie możesz wejść do tej poczekalni, ponieważ już nie ma miejsc. Wyjdź i spróbuj znowu.</p>
+                @elseif(session('alert')== 'cant_enter')
+                    <p>Nie możesz wejść do poczekalni, ponieważ już jesteś w aktywnej. Wyjdź i spróbuj znowu.</p>
+                @endif()
+                <p>
+                    <button class="btn btn-sm btn-danger" id="closeDialog">Zamknij</button>
+                </p>
+            </dialog>
         </div>
     </div>
 </x-app-layout>
+
+@section('link-script')
+    <script>
+        var dialog = document.getElementById('lobby-exist')
+        var button = document.getElementById('closeDialog')
+        if ('{{session('alert')}}') {
+            dialog.style.display = 'inline';
+        }
+
+        button.onclick = function () {
+            dialog.style.display = 'none';
+        }
+    </script>
+@endsection

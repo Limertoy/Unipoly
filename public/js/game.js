@@ -50,10 +50,10 @@ var Game = (function () {
 
     ];
 
-    game.players = [
-        new Player("Stan", 1000, "Triangle", "player1"),
-        new Player("Ike", 1000, "Circle", "player2")
-    ];
+    // game.players = [
+    //     new Player("Stan", 1000, "Triangle", "player1"),
+    //     new Player("Ike", 1000, "Circle", "player2")
+    // ];
 
 
     game.currentPlayer = 0;
@@ -73,17 +73,9 @@ var Game = (function () {
         }
 
         var square1 = document.getElementById("square1-residents");
-        for (var i = 0; i < game.players.length; i++) {
-            game.players[i].createToken(square1);
-        }
-
-
-        updateByID("player1-info_name", game.players[0].name + "&nbsp;&nbsp;");
-        updateByID("player1-info_cash", game.players[0].cash);
-        updateByID("player2-info_name", game.players[1].name + "&nbsp;&nbsp;");
-        updateByID("player2-info_cash", game.players[1].cash);
-        document.getElementById("player1-info").style.backgroundColor = "#845CA3";
-        document.getElementById("player2-info").style.backgroundColor = "#68B54D";
+        // for (var i = 0; i < game.players.length; i++) {
+        //     game.players[i].createToken(square1);
+        // }
     };
 
 

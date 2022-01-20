@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lobby;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -28,17 +29,25 @@ class LobbyController extends Controller
         return Lobby::with('user1')->get();
     }
 
-    public static function searchUser($user_id){
-        $user = DB::table('users')
-            ->where('id', $user_id)
-            ->first();
-
-        return $user;
+    public static function searchUser($user_id)
+    {
+        return User::find($user_id);
     }
 
     public function joinToLobby(Request $request)
     {
         $lobby = Lobby::find($request->input('lobby'));
+
+        $user = Lobby::where('is_ended', '0')
+            ->where('user1_id', Auth::id())
+            ->where('user2_id', Auth::id())
+            ->where('user3_id', Auth::id())
+            ->where('user4_id', Auth::id());
+
+        if($user){
+            return redirect()->back()->with('alert', 'cant_enter');
+        }
+
 
         if (!$lobby->user2_id) {
             $lobby->user2_id = Auth::id();
@@ -49,24 +58,28 @@ class LobbyController extends Controller
         } else if (!$lobby->user4_id) {
             $lobby->user4_id = Auth::id();
             $lobby->save();
-        }
+        } else
+            return redirect()->back()->with('alert', 'places_taken');
 
         return '200';
     }
 
     public function createLobby(Request $request)
     {
-        $user = Auth::user();
-        $str = Str::random(20);
+        $is_lobby = Lobby::where('user1_id', Auth::id())->first();
+        if (!$is_lobby) {
+            $user = Auth::user();
+            $str = Str::random(20);
 
+            $lobby = $user->lobby_slot1()->create([
+                'user1_id' => Auth::id(),
+                'token' => $str
+            ]);
 
-        $lobby = $user->lobby_slot1()->create([
-            'user1_id' => Auth::id(),
-            'token' => $str
-        ]);
-
-
-        broadcast(new LobbyCreated($user, $lobby))->toOthers();
+            return redirect()->route('joinGame', ['id' => $str]);
+        } else {
+            return redirect()->back()->with('alert', 'lobby_exists');
+        }
     }
 }
 

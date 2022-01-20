@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import ChatMessages from "./components/ChatMessages";
 import ChatForm from "./components/ChatForm";
-import LobbyCreate from "./components/LobbyCreate";
-import LobbyJoin from "./components/LobbyJoin";
-import LobbyShow from "./components/LobbyShow";
 import axios from "axios";
 
 require('./bootstrap');
@@ -13,10 +10,7 @@ require('phaser');
 const app = new Vue({
     components: {
         'chat-messages': ChatMessages,
-        'chat-form': ChatForm,
-        'lobby-create': LobbyCreate,
-        'lobby-join': LobbyJoin,
-        'lobby-show': LobbyShow
+        'chat-form': ChatForm
     },
     el: '#app',
     data: {
@@ -25,7 +19,6 @@ const app = new Vue({
     },
     created() {
         this.fetchMessages();
-        this.fetchLobbies();
 
         window.Echo.private('chat')
             .listen('MessageSent', (e) => {
@@ -33,14 +26,6 @@ const app = new Vue({
                     message: e.message.message,
                     user: e.user
                 });
-            });
-
-        window.Echo.private('lobbies')
-            .listen('LobbyCreated', (e) => {
-               this.lobby.push({
-                   lobby: e.lobby.id,
-                   user: e.user
-               })
             });
 
     },
@@ -51,32 +36,11 @@ const app = new Vue({
                 this.messages = response.data;
             }).catch((err) => console.log(err));
         },
-        fetchLobbies(){
-
-            axios.get('/lobbies/get').then(response => {
-                this.lobby = response.data;
-            }).catch((err) => console.log(err));
-
-        },
         addMessage(message) {
 
             this.messages.push(message);
 
             axios.post('/messages', message).then(response => {
-                console.log(response.data);
-            }).catch((err) => console.log(err));
-        },
-        addLobby(lobby){
-            this.lobby.push(lobby);
-
-            axios.post('/lobbies', lobby).then(response => {
-                console.log(response.data);
-            }).catch((err) => console.log(err));
-        },
-        joinLobby(lobby) {
-            this.lobby.push(lobby);
-
-            axios.put('/lobbies', lobby).then(response => {
                 console.log(response.data);
             }).catch((err) => console.log(err));
         }
