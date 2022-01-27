@@ -35,7 +35,7 @@
                             @csrf
                             <input type="hidden" name="lobby" value="{{$lobby->id}}">
                             <button class="btn btn-lg btn-info" id="btn-chat" @click="joinLobby">
-                                Dołącz
+                                Wejdź
                             </button>
                         </form>
 

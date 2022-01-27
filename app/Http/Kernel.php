@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckModer;
+use App\Http\Middleware\ForceJsonResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel

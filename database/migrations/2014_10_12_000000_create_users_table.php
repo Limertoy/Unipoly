@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_muted')->default('0');
             $table->boolean('is_moderator')->default('0');
             $table->boolean('is_banned')->default('0');
+            $table->string('temp_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

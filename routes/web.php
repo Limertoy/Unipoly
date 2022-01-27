@@ -90,6 +90,10 @@ Route::get('/addFriend/search', [FriendsController::class, 'searchUser'])
     ->name('searchFriends');
 
 
+Route::get('/test', function () {
+    return view('test', ['user_id' => 2]);
+})->middleware('auth')->name('test');
+
 require __DIR__.'/game.php';
 require __DIR__.'/auth.php';
 require __DIR__.'/adminPanel.php';

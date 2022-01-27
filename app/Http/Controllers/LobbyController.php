@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GameChat;
 use App\Models\Lobby;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
@@ -37,31 +39,45 @@ class LobbyController extends Controller
     public function joinToLobby(Request $request)
     {
         $lobby = Lobby::find($request->input('lobby'));
+        $user = null;
+        $connect = false;
 
-        $user = Lobby::where('is_ended', '0')
-            ->where('user1_id', Auth::id())
-            ->where('user2_id', Auth::id())
-            ->where('user3_id', Auth::id())
-            ->where('user4_id', Auth::id());
 
-        if($user){
+        if ($lobby->user1_id == Auth::id())
+            $connect = true;
+        else {
+            $user = Lobby::where('is_ended', '0')
+                ->where('user1_id', Auth::id())
+                ->orWhere('user2_id', Auth::id())
+                ->orWhere('user3_id', Auth::id())
+                ->orWhere('user4_id', Auth::id())->first();
+        }
+
+        if ($user) {
             return redirect()->back()->with('alert', 'cant_enter');
         }
 
+        if (!$connect) {
+            if (!$lobby->user2_id) {
+                $lobby->user2_id = Auth::id();
+                $lobby->save();
+            } else if (!$lobby->user3_id) {
+                $lobby->user3_id = Auth::id();
+                $lobby->save();
+            } else if (!$lobby->user4_id) {
+                $lobby->user4_id = Auth::id();
+                $lobby->save();
+            } else
+                return redirect()->back()->with('alert', 'places_taken');
+        }
 
-        if (!$lobby->user2_id) {
-            $lobby->user2_id = Auth::id();
-            $lobby->save();
-        } else if (!$lobby->user3_id) {
-            $lobby->user3_id = Auth::id();
-            $lobby->save();
-        } else if (!$lobby->user4_id) {
-            $lobby->user4_id = Auth::id();
-            $lobby->save();
-        } else
-            return redirect()->back()->with('alert', 'places_taken');
+        GameChat::create([
+            'user_id' => 1,
+            'message' => Auth::user()->name . ' dołączył się.',
+            'lobby_id' => $lobby->id
+        ]);
 
-        return '200';
+        return redirect()->route('joinGame', ['id' => $lobby->token]);
     }
 
     public function createLobby(Request $request)
@@ -74,6 +90,12 @@ class LobbyController extends Controller
             $lobby = $user->lobby_slot1()->create([
                 'user1_id' => Auth::id(),
                 'token' => $str
+            ]);
+
+            GameChat::create([
+                'user_id' => 1,
+                'message' => 'Gra została stworzona.',
+                'lobby_id' => $lobby->id
             ]);
 
             return redirect()->route('joinGame', ['id' => $str]);

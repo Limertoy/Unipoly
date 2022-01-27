@@ -1,7 +1,4 @@
 window.onload = function () {
-    var rollButton = document.getElementById("rollButton");
-    rollButton.onclick = Game.takeTurn;
-
     Game.populateBoard();
 };
 

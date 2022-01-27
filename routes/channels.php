@@ -22,6 +22,3 @@ Broadcast::channel('chat', function ($user) {
    return Auth::check();
 });
 
-Broadcast::channel('lobbies', function ($user){
-   return Auth::check();
-});
