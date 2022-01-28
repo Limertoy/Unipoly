@@ -36,6 +36,7 @@ class InventoryController extends Controller
         }
 
         Inventory::where($column, 1)
+            ->where('user_id', Auth::id())
             ->update([$column => 0]);
 
         Inventory::where('user_id', Auth::id())

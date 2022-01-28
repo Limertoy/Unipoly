@@ -21,11 +21,6 @@ Route::get('/inventory', [InventoryController::class, 'show'])->
 middleware(['auth'])
     ->name('inventory');
 
-Route::get('/game', function () {
-    return view('game');
-})->middleware(['auth'])
-    ->name('game');
-
 Route::get('/profile/{id}', [UserController::class, 'show'])
     ->middleware('auth')
     ->name('profile');

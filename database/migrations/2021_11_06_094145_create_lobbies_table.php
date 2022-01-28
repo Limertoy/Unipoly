@@ -15,7 +15,7 @@ class CreateLobbiesTable extends Migration
     {
         Schema::create('lobbies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user1_id')->unsigned()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user1_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('user2_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('user3_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('user4_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');

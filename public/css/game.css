@@ -2,6 +2,8 @@ body {
     background-color: #2a4ecd;
 }
 
+
+
 .row {
     display: table-row;
     height: 9em;
@@ -10,19 +12,6 @@ body {
 .row-side {
     display: table-row;
     height: 4.5em;
-}
-
-p.residents {
-    position: absolute;
-    text-align: center;
-}
-
-.first {
-    background-color: #4dc0b5;
-}
-
-.second {
-    background-color: #ff49ca;
 }
 
 p.square-name {
@@ -46,38 +35,12 @@ p.square-name {
     text-align: center;
 }
 
-.cell-corner {
-    outline: 1px solid black;
-    background-color: white;
-    display: table-cell;
-    width: 10em!important;
-    height: 9em;
-    text-align: center;
-}
-
-.cell-side {
-    outline: 1px solid black;
-    background-color: white;
-    display: table-cell;
-    width: 160px!important;
-    height: 72px;
-    text-align: center;
-}
-
-.cell-middle {
-    background-color: transparent;
-    display: table-cell;
-    width: 54em!important;
-    height: 4.5em;
-    text-align: center;
-}
-
 .cell-info {
     outline: 1px solid black;
     display: inline-block;
     width: 10em!important;
     text-align: center;
-    margin: 10px 30px;
+    margin: 0.5vw 1.5vw;
     border-radius: 20px;
 }
 
@@ -90,13 +53,12 @@ p.square-name {
     outline: 1px solid black;
     display: inline-block;
     text-align: left;
-    margin: 10px 30px;
+    margin: 0.5vw 1.5vw;
     border-radius: 20px;
-    position: static;
     background-color: #2d3748;
     width: 90%!important;
-    height: 27%;
-    padding-top: 3%;
+    height: 15vw;
+    padding-top: 1.5vw;
     color: white;
 }
 
@@ -137,43 +99,72 @@ p.square-name {
     position: absolute!important;
 }
 
-
-. {
+.token {
     display: inline;
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 40px solid darkblue;
+    padding-top: 5px;
+    height: 30px!important;
 }
 
-.Circle {
-    display: inline;
-    width: 40px;
-    height: 40px;
-    background: darkblue;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    border-radius: 50px;
+#player1-1{
+    content: url("/img/tokens/player1_triangle.png");
 }
 
-#player1-info_token {
-    display: inline-block;
-    margin: 0;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 20px solid darkblue;
+#player2-1{
+    content: url("/img/tokens/player2_triangle.png");
 }
 
-#player2-info_token {
-    display: inline-block;
-    margin: 0;
-    width: 20px;
-    height: 20px;
-    background: darkblue;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    border-radius: 50px;
+#player3-1{
+    content: url("/img/tokens/player3_triangle.png");
+}
+
+#player4-1{
+    content: url("/img/tokens/player4_triangle.png");
+}
+
+#player1-2{
+    content: url("/img/tokens/player1_star.png");
+}
+
+#player2-2{
+    content: url("/img/tokens/player2_star.png");
+}
+
+#player3-2{
+    content: url("/img/tokens/player3_star.png");
+}
+
+#player4-2{
+    content: url("/img/tokens/player4_star.png");
+}
+
+#player1-6{
+    content: url("/img/tokens/player1_mute.png");
+}
+
+#player2-6{
+    content: url("/img/tokens/player2_mute.png");
+}
+
+#player3-6{
+    content: url("/img/tokens/player3_mute.png");
+}
+
+#player4-6{
+    content: url("/img/tokens/player4_mute.png");
+}
+
+#player1-7{
+    content: url("/img/tokens/player1_circle.png");
+}
+
+#player2-7{
+    content: url("/img/tokens/player2_circle.png");
+}
+
+#player3-7{
+    content: url("/img/tokens/player3_circle.png");
+}
+
+#player4-7{
+    content: url("/img/tokens/player4_circle.png");
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Inventory;
 use App\Models\Lobby;
 use Livewire\Component;
 
@@ -15,7 +16,7 @@ class GamePlayers extends Component
             ->with('user2')
             ->with('user3')
             ->with('user4')
-            ->find( $this->lobby_id);
+            ->find($this->lobby_id);
 
         return view('livewire.game-players', ['lobby' => $lobby]);
     }

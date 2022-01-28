@@ -18,6 +18,7 @@ class LobbyController extends Controller
     {
         $lobbies = DB::table('lobbies')
             ->where('is_started', '0')
+            ->where('is_ended', '0')
             ->get();
 
 
@@ -102,6 +103,34 @@ class LobbyController extends Controller
         } else {
             return redirect()->back()->with('alert', 'lobby_exists');
         }
+    }
+
+    public function leaveLobby(Request $request){
+        $lobby = Lobby::find($request->lobby_id);
+        if(!$lobby->is_started){
+            if($request->user_left == 'user1_id'){
+                $lobby->is_ended = true;
+                $lobby->user1_id = null;
+                $lobby->save();
+                GameChat::create([
+                    'user_id' => 1,
+                    'message' => 'Właścieciel poczekalni odłączył się. Poczekalnia została wyłączona.',
+                    'lobby_id' => $lobby->id
+                ]);
+            } else {
+                Lobby::where('id', $request->lobby_id)
+                    ->update([$request->user_left => null]);
+                GameChat::create([
+                    'user_id' => 1,
+                    'message' => $request->name_left . ' odłączył się.',
+                    'lobby_id' => $lobby->id
+                ]);
+            }
+        } else {
+
+        }
+
+        return redirect()->route('dashboard');
     }
 }
 
