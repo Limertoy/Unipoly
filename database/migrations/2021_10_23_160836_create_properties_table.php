@@ -17,6 +17,13 @@ class CreatePropertiesTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
+            $table->integer('rent')->nullable();
+            $table->integer('house1')->nullable();
+            $table->integer('house2')->nullable();
+            $table->integer('house3')->nullable();
+            $table->integer('house4')->nullable();
+            $table->integer('star')->nullable();
+            $table->integer('buy_house')->nullable();
             $table->string('type');
             $table->string('family');
             $table->timestamps();

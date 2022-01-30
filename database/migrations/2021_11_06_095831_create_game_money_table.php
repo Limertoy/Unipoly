@@ -16,8 +16,10 @@ class CreateGameMoneyTable extends Migration
         Schema::create('game_money', function (Blueprint $table) {
             $table->id();
             $table->foreignId('game_id')->references('id')->on('lobbies')->onDelete('cascade');
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('money');
+            $table->integer('user1_money');
+            $table->integer('user2_money');
+            $table->integer('user3_money');
+            $table->integer('user4_money');
         });
     }
 

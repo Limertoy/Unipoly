@@ -7,7 +7,6 @@
 
 .mainSquare {
     height: 100%;
-    outline: 1px dashed #c2dec5;
     outline-offset: -13px;
 }
 
@@ -103,18 +102,14 @@
     height: 10%;
 }
 
-.firstLine-top.no-color {
-    bottom: 12%;
-}
-
 .firstLine-left {
     top: 5%;
-    bottom: 0px;
-    right: 30%;
+    right: 27%;
 }
 
-.firstLine-left.no-color {
-    text-align: center;
+.firstLine-left.chance {
+    top: 30%;
+    right: 35%;
 }
 
 .firstLine-right {
@@ -123,8 +118,9 @@
     left: 26%;
 }
 
-.firstLine-right.no-color {
-    left: 26%;
+.firstLine-right.chance, .firstLine-right.fine {
+    top: 30%;
+    left: 35%;
 }
 
 .firstLine-bottom {
@@ -133,40 +129,96 @@
     top: 30%;
 }
 
-.firstLine-bottom.no-color {
-    top: 12%;
+
+.white {
+    background-color: #F5EBEF;
 }
 
-.red {
-    background-color: #ed1b24;
+.prints {
+    background-color: #622A06;
+    color: white;
 }
 
-.yellow {
-    background-color: #fef200;
+.fine {
+    background-color: #555152;
+    color: white;
 }
 
-.lightblue {
-    background-color: #aae0fa;
+.science {
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FE9696;
+    border: black;
 }
 
-.brown {
-    background-color: #955436;
+.topSide.science {
+    background: linear-gradient(360deg,#FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FE9696;
+    border: black;
 }
 
-.blue {
-    background-color: #0072bb;
+.leftSide.science {
+    background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FE9696;
 }
 
-.green {
-    background-color: #1fb25a;
+.rightSide.science {
+    background: linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #FE9696;
 }
 
-.orange {
-    background-color: #f7941d;
+.empty {
+    background: #79EFF5;
 }
 
-.purple {
-    background-color: #d93a96;
+.club {
+    background-color: #F56EEB;
+}
+
+.leftSide.webpage {
+    background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #5856C4;
+}
+
+.topSide.webpage {
+    background: linear-gradient(360deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #5856C4;
+}
+
+.school {
+    background-color: #F5AC33;
+}
+
+.chance {
+    color: white;
+}
+
+.program {
+    background-color: #F53E49;
+    color: white;
+}
+
+.classes {
+    background-color: #F5F34A;
+}
+
+.dormitory {
+    background-color: #327F2A;
+    color: white;
+}
+
+.festival {
+    background-color: #111272;
+    color: white;
+}
+
+.leftSide.chance {
+    background: linear-gradient(90deg, rgba(187,68,208,1) 0%, rgba(149,149,173,1) 55%, rgba(0,212,255,1) 100%);
+}
+
+.rightSide.chance {
+    background: linear-gradient(270deg, rgba(187,68,208,1) 0%, rgba(149,149,173,1) 55%, rgba(0,212,255,1) 100%);
+}
+
+.topSide.chance {
+    background: linear-gradient(180deg, rgba(187,68,208,1) 0%, rgba(149,149,173,1) 55%, rgba(0,212,255,1) 100%);
+}
+
+.bottomSide.chance {
+    background: linear-gradient(360deg, rgba(187,68,208,1) 0%, rgba(149,149,173,1) 55%, rgba(0,212,255,1) 100%);
 }
 
 .rotation2 {
@@ -180,7 +232,7 @@
     border: 3px solid black;
     text-align: center;
     box-shadow: inset 0px 2px 12px 0px #0b2682;
-    margin: 12vw 3vw;
+    margin: 10vw 3vw;
 }
 
 .logoName {
@@ -198,24 +250,29 @@
     font-size: 1vw;
 }
 
+.corner21 {
+    transform: translateX(40%) translateY(25%);
+    content: url("/img/board/freeparking.svg");
+    height: 4.5vw;
+}
+
+.corner31 {
+    transform: translateX(17%) translateY(17%);
+    content: url("/img/board/gotoprison.svg");
+    height: 5vw;
+}
+
 .corner1 {
-    transform: translateX(30%) translateY(200%);
+    transform: translateX(15%) translateY(60%);
+    content: url("/img/board/start.svg");
+    height: 3.5vw;
 }
 
-.corner2 {
-    transform: translateX(60%) translateY(200%);
+.corner11 {
+    transform: translateX(20%) translateY(20%);
+    content: url("/img/board/prison.svg");
     line-height: 1vw;
-}
-
-.corner3 {
-    transform:  translateY(60%);
-    line-height: 1vw;
-    font-size: 1vw;
-}
-
-.corner4 {
-    transform: rotateZ(45deg) translateX(110%) translateY(-31%);
-    line-height: 1vw;
+    height: 5vw;
 }
 
 .squareCorner {

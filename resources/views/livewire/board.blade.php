@@ -1,169 +1,71 @@
 <div>
     <div class="responsive-game">
         <div class="mainSquare">
+
             <div class="row-game top-game">
-                <div class="square2"><span class="corner corner1">free   parking</span></div>
-                <div class="square1">
-                    <div class="header-game header-top red"></div>
-                    <div class="firstLine firstLine-top rotation2">kentucky avenue</div>
-                </div>
-                <div class="square1">
-                    <div class="firstLine firstLine-top no-color rotation2">chance</div>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-top red"></div>
-                    <div class="firstLine firstLine-top rotation2">indiana   avenue</div>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-top red"></div>
-                    <div class="firstLine firstLine-top rotation2">illinios   avenue</div>
-                </div>
-                <div class="square1">
-                    <div class="firstLine firstLine-top no-color rotation2">b. & o.   railroad</div>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-top yellow"></div>
-                    <div class="firstLine firstLine-top rotation2">atlantic   avenue</div>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-top yellow"></div>
-                    <div class="firstLine firstLine-top rotation2">ventnor avenue</div>
-                </div>
-                <div class="square1">
-                    <div class="firstLine firstLine-top no-color rotation2">water   works</div>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-top yellow"></div>
-                    <div class="firstLine firstLine-top rotation2">marvin   gardens</div>
-                </div>
-                <div class="square2"><span class="corner corner2">go to jail</span></div>
+                @for($i = 20; $i < 31; $i++)
+                    <div class="@if($properties[$i]->type == 'corner')square2 @else square1 @endif topSide {{$properties[$i]->family}}">
+                        @if($properties[$i]->type == 'corner')
+                            <span class="corner corner{{$properties[$i]->id}}">{{$properties[$i]->name}}</span>
+                        @else
+                            @if($properties[$i]->type == 'field')
+                                <div class="header-game header-top white"></div>
+                            @endif
+                            <div
+                                class="firstLine firstLine-top rotation2">{{$properties[$i]->name}}</div>
+                        @endif
+                    </div>
+                @endfor
             </div>
 
             <div class="row-game center-game">
                 <div class="square2">
-                    <div class="squareSide">
-                        <div class="headerSide header-left orange"></div>
-                        <div class="firstLine firstLine-left rotation1">new york   avenue</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="headerSide header-left orange"></div>
-
-                        <div class="firstLine firstLine-left rotation1">tennessee   avenue</div>
-
-                    </div>
-
-                    <div class="squareSide">
-                        <div class="firstLine firstLine-left no-color rotation1">community  chest</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="headerSide header-left orange"></div>
-                        <div class="firstLine firstLine-left rotation1">st.james  place</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="firstLine firstLine-left no-color rotation1">pennsylvania<br> railroad</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="headerSide header-left purple"></div>
-                        <div class="firstLine firstLine-left rotation1">virginia  avenue</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="headerSide header-left purple"></div>
-                        <div class="firstLine firstLine-left rotation1">states  avenue</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="firstLine firstLine-left no-color rotation1">electric company</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="headerSide header-left purple"></div>
-                        <div class="firstLine firstLine-left rotation1">st. charles place</div>
-                    </div>
+                    @for($i = 19; $i > 10; $i--)
+                        <div class="squareSide leftSide {{$properties[$i]->family}}">
+                            @if($properties[$i]->type == 'field')
+                                <div class="headerSide header-left white"></div>
+                            @endif
+                            <div
+                                class="firstLine firstLine-left {{$properties[$i]->type}} rotation1">{{$properties[$i]->name}}</div>
+                        </div>
+                    @endfor
                 </div>
+
+                {{-- Centrum pola --}}
                 <div class="square9">
                     <div class="logoBox">
                         <span class="logoName">UniPoly</span>
                     </div>
                 </div>
+                {{------------------}}
+
                 <div class="square2">
-                    <div class="squareSide">
-                        <div class="headerSide header-right green"></div>
-                        <div class="firstLine firstLine-right">pacific avenue</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="headerSide header-right green"></div>
-                        <div class="firstLine firstLine-right">north carolina avenue</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="firstLine firstLine-right no-color">community chest</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="headerSide header-right green"></div>
-                        <div class="firstLine firstLine-right">pennsylvania avenue</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="firstLine firstLine-right no-color">short line</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="firstLine firstLine-right no-color">chance</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="headerSide header-right blue"></div>
-                        <div class="firstLine firstLine-right">park  place</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="firstLine firstLine-right no-color">luxury  tax</div>
-                    </div>
-                    <div class="squareSide">
-                        <div class="headerSide header-right blue"></div>
-                        <div class="firstLine firstLine-right">tennessee  avenue</div>
-                    </div>
+                    @for($i = 31; $i < 40; $i++)
+                        <div class="squareSide rightSide {{$properties[$i]->family}}">
+                            @if($properties[$i]->type == 'field')
+                                <div class="headerSide header-right white"></div>
+                            @endif
+                            <div
+                                class="firstLine firstLine-right {{$properties[$i]->type}} rotation1">{{$properties[$i]->name}}</div>
+                        </div>
+                    @endfor
                 </div>
             </div>
 
             <div class="row-game top-game">
-                <div class="square2">
-                    <span class="corner4-left">just</span>
-                    <div class="squareCorner">
-                        <span class="corner corner4">in  jail</span>
+                @for($i = 10; $i >= 0; $i--)
+                    <div class="@if($properties[$i]->type == 'corner')square2 @else square1 @endif bottomSide {{$properties[$i]->family}}">
+                        @if($properties[$i]->type == 'corner')
+                            <span class="corner corner{{$properties[$i]->id}}">{{$properties[$i]->name}}</span>
+                        @else
+                            @if($properties[$i]->type == 'field')
+                                <div class="header-game header-bottom white"></div>
+                            @endif
+                            <div class="firstLine firstLine-bottom rotation2">{{$properties[$i]->name}}</div>
+                        @endif
                     </div>
-                    <span class="corner4-bottom">visiting</span>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-bottom lightblue"></div>
-                    <div class="firstLine firstLine-bottom">connecticut avenue</div>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-bottom lightblue"></div>
-                    <div class="firstLine firstLine-bottom">vermont  avenue</div>
-                </div>
-                <div class="square1">
-                    <div class="firstLine firstLine-bottom no-color">chance</div>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-bottom lightblue"></div>
-                    <div class="firstLine firstLine-bottom">oriental  avenue</div>
-                </div>
-                <div class="square1">
-                    <div class="firstLine firstLine-bottom no-color">reading  railroad</div>
-                </div>
-                <div class="square1">
-                    <div class="firstLine firstLine-bottom no-color">income  tax</div>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-bottom brown"></div>
-                    <div class="firstLine firstLine-bottom">baltic  avenue</div>
-                </div>
-                <div class="square1">
-                    <div class="firstLine firstLine-bottom no-color">community  chest</div>
-                </div>
-                <div class="square1">
-                    <div class="header-game header-bottom brown"></div>
-                    <div class="firstLine firstLine-bottom">avenue</div>
-                </div>
-                <div class="square2">
-                    <span class="corner corner3">collect M200 sala ry as you pass</span>
-                </div>
+                @endfor
             </div>
-
         </div>
     </div>
 </div>

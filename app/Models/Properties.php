@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static create(array $property)
+ * @method static select()
  */
 class Properties extends Model
 {

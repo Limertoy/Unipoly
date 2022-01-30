@@ -30,7 +30,7 @@
                 <livewire:game-players :lobby_id="$lobby->id"/>
             </div>
             <div class="container-lg">
-                <livewire:board/>
+                <livewire:board :lobby_id="$lobby->id"/>
             </div>
         </div>
         <div class="col-4 second">

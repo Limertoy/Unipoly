@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\GameChat;
+use App\Models\GameProperties;
 use App\Models\Lobby;
+use App\Models\Properties;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -84,6 +86,7 @@ class LobbyController extends Controller
     public function createLobby(Request $request)
     {
         $is_lobby = Lobby::where('user1_id', Auth::id())->first();
+        $properties = Properties::select('id', 'price')->get();
         if (!$is_lobby) {
             $user = Auth::user();
             $str = Str::random(20);
@@ -92,6 +95,15 @@ class LobbyController extends Controller
                 'user1_id' => Auth::id(),
                 'token' => $str
             ]);
+
+            foreach ($properties as $property){
+                GameProperties::create([
+                    'game_id' => $lobby->id,
+                    'property_id' => $property->id,
+                    'price' => $property->price
+                ]);
+            }
+
 
             GameChat::create([
                 'user_id' => 1,

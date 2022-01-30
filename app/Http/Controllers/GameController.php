@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
-    public function show($id){
+    public function show($id)
+    {
         $lobby = Lobby::where('token', $id)->first();
 
-        return view('game', ['lobby' => $lobby]);
+        if ($lobby)
+            return view('game', ['lobby' => $lobby]);
+        else
+            return abort(404);
     }
 }
