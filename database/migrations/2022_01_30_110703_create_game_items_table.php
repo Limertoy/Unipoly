@@ -15,10 +15,10 @@ class CreateGameItemsTable extends Migration
     {
         Schema::create('game_items', function (Blueprint $table) {
             $table->foreignId('game_id')->primary()->references('id')->on('lobbies')->onDelete('cascade');
-            $table->foreignId('user1_item')->references('id')->on('items')->onDelete('cascade');
-            $table->foreignId('user2_item')->references('id')->on('items')->onDelete('cascade');
-            $table->foreignId('user3_item')->references('id')->on('items')->onDelete('cascade');
-            $table->foreignId('user4_item')->references('id')->on('items')->onDelete('cascade');
+            $table->foreignId('user1_item')->nullable()->references('id')->on('items')->onDelete('cascade');
+            $table->foreignId('user2_item')->nullable()->references('id')->on('items')->onDelete('cascade');
+            $table->foreignId('user3_item')->nullable()->references('id')->on('items')->onDelete('cascade');
+            $table->foreignId('user4_item')->nullable()->references('id')->on('items')->onDelete('cascade');
         });
     }
 

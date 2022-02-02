@@ -14,7 +14,20 @@ class CreateGamesTable extends Migration
     public function up()
     {
         Schema::create('games', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId('game_id')->primary()->references('id')->on('lobbies')->onDelete('cascade');
+            $table->integer('user1_field')->nullable();
+            $table->integer('user2_field')->nullable();
+            $table->integer('user3_field')->nullable();
+            $table->integer('user4_field')->nullable();
+            $table->integer('active_user')->nullable();
+            $table->string('active_action')->nullable();
+            $table->integer('must_pay')->nullable();
+            $table->integer('prison_user1')->nullable();
+            $table->integer('prison_user2')->nullable();
+            $table->integer('prison_user3')->nullable();
+            $table->integer('prison_user4')->nullable();
+            $table->integer('first_dice')->nullable();
+            $table->integer('second_dice')->nullable();
             $table->timestamps();
         });
     }

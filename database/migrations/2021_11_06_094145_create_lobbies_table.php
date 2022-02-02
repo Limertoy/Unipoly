@@ -28,7 +28,7 @@ class CreateLobbiesTable extends Migration
             $table->boolean('is_ended')->default('0');
             $table->bigInteger('started_at')->nullable();
             $table->bigInteger('ended_at')->nullable();
-            $table->string('token');
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }

@@ -6,9 +6,9 @@
         </div>
     @elseif($lobby->user1)
         <div x-data="{ open: false }" style="display: inline-block">
-            <div class="cell-info" id="player1-info" style="background-color: #FF3041" @click="open = true">
+            <div class="cell-info user1" id="player1-info" @click="open = true">
                 <p id="player1-info_name" style="display:inline">{{$lobby->user1->name}}</p>
-                <p id="player1-info_cash">0$</p>
+                <p id="player1-info_cash">{{$game_money->user1_money}} zł</p>
             </div>
             <div x-show="open" @click.away="open = false" class="dropdown-content">
                 @if($lobby->user1_id == Auth::id())
@@ -28,10 +28,10 @@
     @endif
     @if($lobby->user2)
         <div x-data="{ open: false }" style="display: inline-block">
-            <div class="cell-info" id="player2-info" style="background-color: #7164FF" @click="open = true">
+            <div class="cell-info user2" id="player2-info" @click="open = true">
                 <p id="player2-info_name" style="display:inline">{{$lobby->user2->name}}</p>
                 <br>
-                <p id="player2-info_cash">0$</p>
+                <p id="player2-info_cash">{{$game_money->user2_money}} zł</p>
             </div>
             <div x-show="open" @click.away="open = false" class="dropdown-content">
                 @if($lobby->user2_id == Auth::id())
@@ -52,11 +52,11 @@
     @endif
     @if($lobby->user3)
         <div x-data="{ open: false }" style="display: inline-block">
-            <div class="cell-info" id="player3-info" style="background-color: #23C923" @click="open = true">
+            <div class="cell-info user3" id="player3-info" @click="open = true">
                 <p id="player3-info_name" style="display:inline">{{$lobby->user3->name}} <p class='token'
                                                                                             id="player3-info_token"></p>
                 <br>
-                <p id="player3-info_cash">0$</p>
+                <p id="player3-info_cash">{{$game_money->user3_money}} zł</p>
             </div>
             <div x-show="open" @click.away="open = false" class="dropdown-content">
                 @if($lobby->user3_id == Auth::id())
@@ -77,11 +77,11 @@
     @endif
     @if($lobby->user4)
         <div x-data="{ open: false }" style="display: inline-block">
-            <div class="cell-info" id="player4-info" style="background-color: #A9A627" @click="open = true">
+            <div class="cell-info user4" id="player4-info" @click="open = true">
                 <p id="player4-info_name" style="display:inline">{{$lobby->user4->name}} <p class='token'
                                                                                             id="player4-info_token"></p>
                 <br>
-                <p id="player4-info_cash">0$</p>
+                <p id="player4-info_cash">{{$game_money->user4_money}} zł</p>
             </div>
             <div x-show="open" @click.away="open = false" class="dropdown-content">
                 @if($lobby->user4_id == Auth::id())

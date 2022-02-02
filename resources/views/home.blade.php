@@ -6,7 +6,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
 </head>
 
@@ -14,20 +15,20 @@
 <div class="bg-image">
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
         <header class="masthead mb-auto">
-            <div class="inner">
-                <h3 class="masthead-brand">Unipoly</h3>
+            <div class="inner text-left">
+                <img src="{{ asset('img/logo.png') }}" style="height: 2vw;">
                 <nav class="nav nav-masthead justify-content-center">
                     @if (Route::has('login'))
-                            @auth
-                                <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
-                                <a class="nav-link" href="{{ url('/dashboard') }}">Chat</a>
-                            @else
-                                <a class="nav-link" href="/login">Logowanie</a>
+                        @auth
+                            <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
+                            <a class="nav-link" href="{{ url('/lobbies') }}">Poczekalnie</a>
+                        @else
+                            <a class="nav-link" href="/login">Logowanie</a>
 
-                                @if (Route::has('register'))
-                                    <a class="nav-link" href="/register">Rejestracja</a>
-                                @endif
-                            @endauth
+                            @if (Route::has('register'))
+                                <a class="nav-link" href="/register">Rejestracja</a>
+                            @endif
+                        @endauth
                     @endif
                 </nav>
             </div>
@@ -36,8 +37,9 @@
         <main role="main" class="inner cover">
             <h1 class="cover-heading">Nie wiesz w co pograć?</h1>
             <p class="lead" style="color: #fff;">Monopol - teraz w edycji Uniwersytetu Rzeszowskiego!
-            Tu znajdziesz pola, powiązane z UR oraz spotkasz innych studentów! Jeszcze nie zostałeś studentem, ale masz zamiar na rekrutacje?
-            Ta gra pomoże ci poznać Uniwersytet w ciekawy oraz grający sposób!</p>
+                Tu znajdziesz pola, powiązane z UR oraz spotkasz innych studentów! Jeszcze nie zostałeś studentem, ale
+                masz zamiar na rekrutacje?
+                Ta gra pomoże ci poznać Uniwersytet w ciekawy oraz grający sposób!</p>
             <p class="lead">
                 @if(Route::has('login'))
                     @auth

@@ -2,30 +2,6 @@ body {
     background-color: #2a4ecd;
 }
 
-
-
-.row {
-    display: table-row;
-    height: 9em;
-}
-
-.row-side {
-    display: table-row;
-    height: 4.5em;
-}
-
-p.square-name {
-    font-size: 11px;
-}
-
-.left-column {
-    background-color: green;
-}
-
-.players {
-    text-align: left;
-}
-
 .cell {
     outline: 1px solid black;
     background-color: white;
@@ -79,6 +55,7 @@ p.square-name {
 }
 
 .dropdown-content {
+    z-index: 8;
     margin-top: 1px;
     margin-left: 33px;
     padding: 5px;
@@ -86,11 +63,26 @@ p.square-name {
     position: absolute!important;
     background-color: #f1f1f1;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    border: groove;
-    border-color: black;
-    border-width: 1px;
+    border: 1px solid;
+    border-radius: 1vw;
     height: 50px!important;
     width: 150px;
+}
+
+.user1 {
+    background-color: #FF3041;
+}
+
+.user2 {
+    background-color: #7164FF;
+}
+
+.user3 {
+    background-color: #23C923;
+}
+
+.user4 {
+    background-color: #A9A627;
 }
 
 /*Tokens*/

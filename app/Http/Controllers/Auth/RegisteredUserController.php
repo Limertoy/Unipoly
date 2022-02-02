@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -34,11 +35,20 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'required' => 'Pole ":attribute" jest obowiązkowe',
+            'string' => 'Pole ":attribute" musi być tekstem',
+            'email.email' => 'Pole "Email" ma niepoprawną postać',
+            'min' => 'Pole "Hasło" jest zakrótkie (minimum 8 symboli)',
+            'email.unique' => 'Ten email już zajęty',
+            'name.unique' => 'To imię już zajęte',
+            'password.confirmed' => 'Hasła nie są takie same'
+        ];
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ], $messages);
 
         $user = User::create([
             'name' => $request->name,
@@ -66,6 +76,19 @@ class RegisteredUserController extends Controller
                 'user_id' => Auth::id(),
             ]);
         }
+
+        Inventory::create([
+            'user_id' => Auth::id(),
+            'item_id' => 7,
+            'is_chosen_pawn' => 1
+        ]);
+
+        Inventory::create([
+            'user_id' => Auth::id(),
+            'item_id' => 8,
+            'is_chosen_dice' => 1
+        ]);
+
         return redirect(RouteServiceProvider::HOME);
     }
 }

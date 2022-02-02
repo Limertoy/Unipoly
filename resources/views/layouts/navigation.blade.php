@@ -18,11 +18,11 @@
                     <x-nav-link :href="route('inventory')" :active="request()->routeIs('inventory')">
                         Inwentarz
                     </x-nav-link>
-                    <x-nav-link :href="route('lobbies')" :active="request()->routeIs('lobbies')">
-                        Poczekalnie
-                    </x-nav-link>
                     <x-nav-link :href="route('friends')" :active="request()->routeIs('friends')">
                         Przyjaciele
+                    </x-nav-link>
+                    <x-nav-link :href="route('lobbies')" :active="request()->routeIs('lobbies')">
+                        Poczekalnie
                     </x-nav-link>
                 </div>
             </div>

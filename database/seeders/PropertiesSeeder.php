@@ -60,7 +60,7 @@ class PropertiesSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'name' => 'UBEZPIECZENIE',
+                'name' => 'UBEZPIE- CZENIE',
                 'price' => 200,
                 'type' => 'fine',
                 'family' => 'fine'
@@ -78,7 +78,7 @@ class PropertiesSeeder extends Seeder
             ],
             [
                 'id' => 7,
-                'name' => 'PUSTO',
+                'name' => 'HALA SPORTOWA',
                 'price' => 100,
                 'rent' => 6,
                 'house1' => 30,
@@ -88,7 +88,7 @@ class PropertiesSeeder extends Seeder
                 'star' => 550,
                 'buy_house' => 75,
                 'type' => 'field',
-                'family' => 'empty'
+                'family' => 'sections'
             ],
             [
                 'id' => 8,
@@ -99,7 +99,7 @@ class PropertiesSeeder extends Seeder
             ],
             [
                 'id' => 9,
-                'name' => 'PUSTO',
+                'name' => 'BASEN',
                 'price' => 100,
                 'rent' => 6,
                 'house1' => 30,
@@ -109,11 +109,11 @@ class PropertiesSeeder extends Seeder
                 'star' => 550,
                 'buy_house' => 75,
                 'type' => 'field',
-                'family' => 'empty'
+                'family' => 'sections'
             ],
             [
                 'id' => 10,
-                'name' => 'PUSTO',
+                'name' => 'SZACHY',
                 'price' => 120,
                 'rent' => 8,
                 'house1' => 40,
@@ -123,7 +123,7 @@ class PropertiesSeeder extends Seeder
                 'star' => 600,
                 'buy_house' => 75,
                 'type' => 'field',
-                'family' => 'empty'
+                'family' => 'sections'
             ],
             [
                 'id' => 11,
@@ -324,7 +324,7 @@ class PropertiesSeeder extends Seeder
             ],
             [
                 'id' => 28,
-                'name' => 'LABORATORIA',
+                'name' => 'LABORA- TORIA',
                 'price' => 260,
                 'rent' => 22,
                 'house1' => 110,
