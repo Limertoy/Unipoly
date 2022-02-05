@@ -15,12 +15,12 @@
                     <form action="{{route('exitGame')}}" method="POST">
                         @method('PUT')
                         @csrf
-                        <button class="btn btn-danger" type="submit">Wyjdź</button>
+                        <button class="btn btn-danger form-responsive" type="submit">Wyjdź</button>
                         <input type="hidden" name="user_left" value="user1_id">
                         <input type="hidden" name="lobby_id" value="{{$lobby->id}}">
                     </form>
                 @else
-                    <a class="btn btn-primary" href="{{route('profile', ['id' => $lobby->user1_id])}}"
+                    <a class="btn btn-primary form-responsive" href="{{route('profile', ['id' => $lobby->user1_id])}}"
                        target="_blank">Zobacz profil</a>
                 @endif
             </div>
@@ -38,13 +38,13 @@
                     <form action="{{route('exitGame')}}" method="POST">
                         @method('PUT')
                         @csrf
-                        <button class="btn btn-danger" type="submit">Wyjdź</button>
+                        <button class="btn btn-danger form-responsive" type="submit">Wyjdź</button>
                         <input type="hidden" name="user_left" value="user2_id">
                         <input type="hidden" name="name_left" value="{{$lobby->user2->name}}">
                         <input type="hidden" name="lobby_id" value="{{$lobby->id}}">
                     </form>
                 @else
-                    <a class="btn btn-primary" href="{{route('profile', ['id' => $lobby->user2_id])}}"
+                    <a class="btn btn-primary form-responsive" href="{{route('profile', ['id' => $lobby->user2_id])}}"
                        target="_blank">Zobacz profil</a>
                 @endif
             </div>
@@ -63,13 +63,13 @@
                     <form action="{{route('exitGame')}}" method="POST">
                         @method('PUT')
                         @csrf
-                        <button class="btn btn-danger" type="submit">Wyjdź</button>
+                        <button class="btn btn-danger form-responsive" type="submit">Wyjdź</button>
                         <input type="hidden" name="user_left" value="user3_id">
                         <input type="hidden" name="name_left" value="{{$lobby->user3->name}}">
                         <input type="hidden" name="lobby_id" value="{{$lobby->id}}">
                     </form>
                 @else
-                    <a class="btn btn-primary" href="{{route('profile', ['id' => $lobby->user3_id])}}"
+                    <a class="btn btn-primary form-responsive" href="{{route('profile', ['id' => $lobby->user3_id])}}"
                        target="_blank">Zobacz profil</a>
                 @endif
             </div>
@@ -88,13 +88,13 @@
                     <form action="{{route('exitGame')}}" method="POST">
                         @method('PUT')
                         @csrf
-                        <button class="btn btn-danger" type="submit">Wyjdź</button>
+                        <button class="btn btn-danger form-responsive" type="submit">Wyjdź</button>
                         <input type="hidden" name="user_left" value="user4_id">
                         <input type="hidden" name="name_left" value="{{$lobby->user4->name}}">
                         <input type="hidden" name="lobby_id" value="{{$lobby->id}}">
                     </form>
                 @else
-                    <a class="btn btn-primary" href="{{route('profile', ['id' => $lobby->user4_id])}}"
+                    <a class="btn btn-primary form-responsive" href="{{route('profile', ['id' => $lobby->user4_id])}}"
                        target="_blank">Zobacz profil</a>
                 @endif
             </div>

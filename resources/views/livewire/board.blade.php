@@ -1,4 +1,5 @@
-<div wire:poll.1000ms="game">
+@extends('livewire.game')
+@section('board')
     <div class="responsive-game">
         <div class="mainSquare">
 
@@ -14,8 +15,10 @@
                                     class="header-game header-top white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
                             @endif
                             <div
-                                class="firstLine firstLine-top rotation2"><b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && $live_properties[$i]->rent)
-                                    <br>Opłata:<br> {{$live_properties[$i]->rent}}zł @elseif($properties[$i]->type == 'field') <br>
+                                class="firstLine firstLine-top rotation2">
+                                <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && $live_properties[$i]->rent)
+                                    <br>Opłata:<br> {{$live_properties[$i]->rent}}
+                                    zł @elseif($properties[$i]->type == 'field') <br>
                                     {{$live_properties[$i]->price}}zł @endif </div>
                         @endif
                         <div class="player-tokens topSide">
@@ -49,7 +52,8 @@
                                     class="headerSide header-left white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
                             @endif
                             <div
-                                class="firstLine firstLine-left {{$properties[$i]->type}} rotation1"><b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
+                                class="firstLine firstLine-left {{$properties[$i]->type}} rotation1">
+                                <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
                                     <br>{{$live_properties[$i]->price}}zł @elseif($live_properties[$i]->rent) <br>
                                     Opłata: {{$live_properties[$i]->rent}}zł @endif </div>
                             <div class="player-tokens leftSide">
@@ -90,7 +94,8 @@
                                     class="headerSide header-right white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
                             @endif
                             <div
-                                class="firstLine firstLine-right {{$properties[$i]->type}} rotation1"><b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
+                                class="firstLine firstLine-right {{$properties[$i]->type}} rotation1">
+                                <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
                                     <br>{{$live_properties[$i]->price}}zł @elseif($live_properties[$i]->rent) <br>
                                     Opłata: {{$live_properties[$i]->rent}}zł @endif </div>
                             <div class="player-tokens rightSide">
@@ -128,8 +133,10 @@
                                     class="header-game header-bottom white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
                             @endif
                             <div
-                                class="firstLine firstLine-bottom rotation2"><b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && $live_properties[$i]->rent)
-                                    <br>Opłata:<br> {{$live_properties[$i]->rent}}zł@elseif($properties[$i]->type == 'field') <br>
+                                class="firstLine firstLine-bottom rotation2">
+                                <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && $live_properties[$i]->rent)
+                                    <br>Opłata:<br> {{$live_properties[$i]->rent}}
+                                    zł@elseif($properties[$i]->type == 'field') <br>
                                     {{$live_properties[$i]->price}}zł @endif </div>
                         @endif
                         <div class="player-tokens bottomSide">
@@ -155,4 +162,4 @@
             </div>
         </div>
     </div>
-</div>
+@endsection

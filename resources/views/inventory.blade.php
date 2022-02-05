@@ -31,7 +31,7 @@
                                     @method('PUT')
                                     @csrf
                                     <button class="btn-sm btn-success" type="submit">Aktywuj</button>
-                                    <input type="hidden" name="item_id" value="{{$item->id}}">
+                                    <input type="hidden" name="item_id" value="{{$item->item_id}}">
                                     <input type="hidden" name="item_type" value="{{$item->type}}">
                                 </form>
                             </div>

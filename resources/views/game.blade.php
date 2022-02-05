@@ -24,22 +24,7 @@
 </head>
 <body style="background-color: #2a4ecd;">
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-8 first">
-            <div class="container players">
-                <livewire:game-players :lobby_id="$lobby->id"/>
-            </div>
-            <div class="container-lg">
-                <livewire:board :lobby_id="$lobby->id"/>
-            </div>
-        </div>
-        <div class="col-4 second">
-            <livewire:game-logic :lobby_id="$lobby->id">
-            <div class="chat-info" style="margin-top: 60%; padding-left: 5px;">
-                <livewire:game-chat :lobby_id="$lobby->id" :user_id="Auth::id()"/>
-            </div>
-        </div>
-    </div>
+    <livewire:game :lobby_id="$lobby->id"/>
 </div>
     @livewireScripts
 </body>
