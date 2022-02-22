@@ -2,7 +2,6 @@
 @section('board')
     <div class="responsive-game">
         <div class="mainSquare">
-
             <div class="row-game top-game">
                 @for($i = 20; $i < 31; $i++)
                     <div

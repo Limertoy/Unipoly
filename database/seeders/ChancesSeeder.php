@@ -19,7 +19,7 @@ class ChancesSeeder extends Seeder
                 'text' => ' idzie na Start i otrzymuje 200 zł.',
                 'amount' => 200,
                 'goto' => 1,
-                'type' => 'gain_and_go'
+                'type' => 'go'
             ],
             [
                 'text' => ' idzie na pole "Laboratoria". Jeżeli przechodzi przez pole "Start", otrzymuję 200 zł.',
@@ -40,7 +40,7 @@ class ChancesSeeder extends Seeder
             [
                 'text' => ' idzie do Dziekanatu załatwić sprawy.',
                 'goto' => 11,
-                'type' => 'go'
+                'type' => 'prison'
             ],
             [
                 'text' => ' dostaję 40 zł przez błąd systemu.',

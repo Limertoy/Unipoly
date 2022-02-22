@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static create(array $chance)
+ * @method static find()
  */
 class Chances extends Model
 {

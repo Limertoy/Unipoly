@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static create(array $property)
  * @method static select()
  * @method static get()
+ * @method static find(\App\Http\Livewire\Game $param)
  */
 class Properties extends Model
 {

@@ -14,6 +14,8 @@ class Games extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'game_id';
+
     public $fillable = [
         'game_id',
         'user1_field',

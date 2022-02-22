@@ -59,10 +59,12 @@ class LobbyController extends Controller
             $connect = true;
         else {
             $user = Lobby::where('is_ended', '0')
-                ->where('user1_id', Auth::id())
-                ->orWhere('user2_id', Auth::id())
-                ->orWhere('user3_id', Auth::id())
-                ->orWhere('user4_id', Auth::id())->first();
+                ->where(function($query) {
+                    $query->where('user1_id', Auth::id())
+                        ->orWhere('user2_id', Auth::id())
+                        ->orWhere('user3_id', Auth::id())
+                        ->orWhere('user4_id', Auth::id());
+                })->first();
         }
 
         if ($user) {

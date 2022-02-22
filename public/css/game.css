@@ -68,8 +68,16 @@ body {
 
 .form-responsive {
     height: 4vh;
-    font-size: 1.8vh!important;
+    font-size: 1.5vh!important;
+    width: 6vw;
+    display: inline-block;
+}
+
+.form-chat {
+    height: 4vh;
+    font-size: 1.5vh!important;
     width: 4vw;
+    display: inline-block;
 }
 
 .user1 {

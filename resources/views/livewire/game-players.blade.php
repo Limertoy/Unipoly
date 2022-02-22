@@ -1,4 +1,4 @@
-<div wire:poll.1000ms>
+<div>
     @if(!$lobby->user1 && !$lobby->user2 && !$lobby->user3 && !$lobby->user4)
         <div class="cell-info" id="player1-info" style="background-color: whitesmoke" @click="open = true">
             <p style="display:inline">Brak graczy</p>

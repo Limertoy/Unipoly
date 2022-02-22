@@ -1,4 +1,4 @@
-<div wire:poll.1000ms>
+<div>
     <div class="chat-container-game border-bottom">
     @forelse ($messages as $message)
         @if($message->user->id != 1){{$message->user->name}}: @endif{{$message->message}}

@@ -19,7 +19,8 @@ class CreateGamesTable extends Migration
             $table->integer('user2_field')->nullable();
             $table->integer('user3_field')->nullable();
             $table->integer('user4_field')->nullable();
-            $table->integer('active_user')->nullable();
+            $table->integer('active_user_id')->nullable();
+            $table->integer('active_player')->nullable();
             $table->string('active_action')->nullable();
             $table->integer('must_pay')->nullable();
             $table->integer('prison_user1')->nullable();

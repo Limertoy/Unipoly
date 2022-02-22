@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Models\Lobby;
+use App\Models\Message;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,7 +26,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+           Lobby::where('is_ended', 1)->delete();
+           Message::truncate();
+           Message::create([
+               'user_id' => 1,
+               'message' => 'Czat był oczyszczony.'
+           ]);
+        })->daily();
     }
 
     /**

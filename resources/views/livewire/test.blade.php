@@ -1,4 +1,4 @@
-<div wire:poll.1000ms>
+<div>
     @forelse ($messages as $message)
         {{$message->user->name}}: {{$message->message}}
         <br/>
