@@ -21,7 +21,7 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="crop">
-                                    <img src="{{$user->avatar}}">
+                                    <img class="img-avatar" src="{{$user->avatar}}">
                                 </div>
                                 <p style="font-size: 30px">{{$user->name}}</p>
                             </div>

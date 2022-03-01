@@ -5,7 +5,7 @@
     border-radius: 150px;
 }
 
-img {
+.img-avatar {
     object-fit: cover;
     width: 250px;
     height: 250px;

@@ -10,6 +10,7 @@ use App\Models\Games;
 use App\Models\Inventory;
 use App\Models\Lobby;
 use App\Models\Properties;
+use App\Models\Stats;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -28,8 +29,20 @@ class LobbyController extends Controller
             ->get();
 
 
+        $active_lobby = DB::table('lobbies')
+            ->where('is_started', '1')
+            ->where('is_ended', '0')
+            ->where(function($query) {
+                $query->where('user1_id', Auth::id())
+                    ->orWhere('user2_id', Auth::id())
+                    ->orWhere('user3_id', Auth::id())
+                    ->orWhere('user4_id', Auth::id());
+            })
+            ->first();
+
         return view('lobbies', [
-            'lobbies' => $lobbies
+            'lobbies' => $lobbies,
+            'active_lobby' => $active_lobby
         ]);
     }
 
@@ -179,7 +192,13 @@ class LobbyController extends Controller
                 ]);
             }
         } else {
-
+            Lobby::where('id', $request->lobby_id)
+                ->update([$request->user_left => null]);
+            GameChat::create([
+                'user_id' => 1,
+                'message' => $request->name_left . ' odłączył się.',
+                'lobby_id' => $lobby->id
+            ]);
         }
 
         return redirect()->route('dashboard');

@@ -10,9 +10,16 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if($active_lobby)
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="input-group">
+                    <p style="font-size: xx-large; color: red;">Jesteś w aktywnej grze!</p>
+                        <a class="btn btn-lg btn-danger" href="{{route('joinGame', ['id' => $active_lobby->token])}}">Dołącz do poprzedniej gry</a>
+                </div>
+            </div><br>
+            @endif
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
                         <form method="POST" action="{{route('createLobby')}}">
                             @method('POST')
                             @csrf
@@ -20,7 +27,6 @@
                                 Nowa poczekalnia
                             </button>
                         </form>
-                    </div>
                 </div>
             </div>
             <br>

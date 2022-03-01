@@ -10,7 +10,9 @@ use App\Models\GameProperties;
 use App\Models\Games;
 use App\Models\Lobby;
 use App\Models\Properties;
+use App\Models\Stats;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Game extends Component
@@ -59,7 +61,8 @@ class Game extends Component
         }
     }
 
-    public function startGame() {
+    public function startGame()
+    {
         $this->lobby->is_started = 1;
         $this->lobby->save();
 
@@ -69,53 +72,91 @@ class Game extends Component
         return view('livewire.game');
     }
 
-    public function throwDice(){
-        $game = Games::where('game_id', $this->lobby_id)->first();
-        $dice1 = 1; //mt_rand(1, 6);
-        $dice2 = 2; //mt_rand(1, 6);
+    public function throwDice()
+    {
+        $dice1 = 15; //mt_rand(1, 6);
+        $dice2 = 0; //mt_rand(1, 6);
 
-        switch ($game->active_player){
+        if($dice1 == $dice2 && $this->doubles == 2){
+            $this->checkDoubles();
+            return view('livewire.game');
+        }
+
+        switch ($this->game->active_player) {
             case(1):
-                $game->user1_field += $dice1 + $dice2;
-                if($game->user1_field > 40){
-                    $game->user1_field -= 40;
-                    $this->game_money->user1_money += 200;
+                if ($this->game->user1_field == 11 && $this->game->prison_user1 < 4 && $this->game->prison_user1 > 0 && $dice1 != $dice2) {
+                    $this->createSystemMessage(Auth::user()->name . ' stoi w kolejce do Dziekanatu.');
+                    $this->game->active_action = 'end_turn';
+                    $this->game->prison_user1++;
+                    $this->game->save();
+                    $this->createSystemMessage(Auth::user()->name . ' wyrzucił ' . $dice1 . ' oraz ' . $dice2 . ', stoi w kolejce do Dziekanatu.');
+                    return view('livewire.game');
+                } else {
+                    $this->game->user1_field += $dice1 + $dice2;
+                    if ($this->game->user1_field > 40) {
+                        $this->game->user1_field -= 40;
+                        $this->game_money->user1_money += 200;
+                    }
+                    $this->field = $this->game->user1_field;
                 }
-                $this->field = $game->user1_field;
                 break;
             case(2):
-                $game->user2_field += $dice1 + $dice2;
-                if($game->user2_field > 40){
-                    $game->user2_field -= 40;
-                    $this->game_money->user2_money += 200;
-                }
+                if ($this->game->user2_field == 11 && $this->game->prison_user2 < 4 && $this->game->prison_user2 > 0 && $dice1 != $dice2) {
+                    $this->createSystemMessage(Auth::user()->name . ' stoi w kolejce do Dziekanatu.');
+                    $this->game->active_action = 'end_turn';
+                    $this->game->prison_user2++;
+                    $this->game->save();
+                    return view('livewire.game');
+                } else {
+                    $this->game->user2_field += $dice1 + $dice2;
+                    if ($this->game->user2_field > 40) {
+                        $this->game->user2_field -= 40;
+                        $this->game_money->user2_money += 200;
+                    }
 
-                $this->field = $game->user2_field;
+                    $this->field = $this->game->user2_field;
+                }
                 break;
             case(3):
-                $game->user3_field += $dice1 + $dice2;
-                if($game->user3_field > 40){
-                    $game->user3_field -= 40;
-                    $this->game_money->user3_money += 200;
-                }
+                if ($this->game->user3_field == 11 && $this->game->prison_user3 < 4  && $this->game->prison_user3 > 0 && $dice1 != $dice2) {
+                    $this->createSystemMessage(Auth::user()->name . ' stoi w kolejce do Dziekanatu.');
+                    $this->game->active_action = 'end_turn';
+                    $this->game->prison_user3++;
+                    $this->game->save();
+                    return view('livewire.game');
+                } else {
+                    $this->game->user3_field += $dice1 + $dice2;
+                    if ($this->game->user3_field > 40) {
+                        $this->game->user3_field -= 40;
+                        $this->game_money->user3_money += 200;
+                    }
 
-                $this->field = $game->user3_field;
+                    $this->field = $this->game->user3_field;
+                }
                 break;
             case(4):
-                $game->user4_field += $dice1 + $dice2;
-                if($game->user4_field > 40){
-                    $game->user4_field -= 40;
-                    $this->game_money->user4_money += 200;
-                }
+                if ($this->game->user4_field == 11 && $this->game->prison_user4 < 4 && $this->game->prison_user4 > 0 && $dice1 != $dice2) {
+                    $this->createSystemMessage(Auth::user()->name . ' stoi w kolejce do Dziekanatu.');
+                    $this->game->active_action = 'end_turn';
+                    $this->game->prison_user4++;
+                    $this->game->save();
+                    return view('livewire.game');
+                } else {
+                    $this->game->user4_field += $dice1 + $dice2;
+                    if ($this->game->user4_field > 40) {
+                        $this->game->user4_field -= 40;
+                        $this->game_money->user4_money += 200;
+                    }
 
-                $this->field = $game->user4_field;
+                    $this->field = $this->game->user4_field;
+                }
                 break;
             default:
                 break;
         }
 
-        $game->first_dice = $dice1;
-        $game->second_dice = $dice2;
+        $this->game->first_dice = $dice1;
+        $this->game->second_dice = $dice2;
         $this->game_money->save();
 
 
@@ -125,58 +166,99 @@ class Game extends Component
             ->select('user_id', 'game_properties.rent', 'game_properties.price', 'family', 'type', 'name')
             ->first();
 
-        Chat::create([
-            'lobby_id' => $this->lobby_id,
-            'user_id' => 1,
-            'message' => Auth::user()->name . ' wyrzucił(-a) ' . $dice1 . ' oraz ' . $dice2 . '. Idzie na pole ' . $property->name . '.'
-        ]);
+        $this->createSystemMessage(Auth::user()->name . ' wyrzucił(-a) ' . $dice1 . ' oraz ' . $dice2 . '. Idzie na pole ' . $property->name . '.');
 
-        $game->save();
 
-        switch ($property->type){
+        $this->game->save();
+
+        switch ($property->type) {
             case('field'):
-                if(!$property->rent){
-                    $game->active_action = 'buy_or_decline';
-                    $game->save();
-                } elseif ($game->active_player == $property->user_id) {
+                if (!$property->rent) {
+                    $this->game->active_action = 'buy_or_decline';
+                } elseif ($this->game->active_player == $property->user_id) {
                     $this->checkDoubles();
                 } else {
-                    $game->must_pay = $property->rent;
-                    $game->active_action = 'must_pay';
-                    $game->save();
+                    if ($property->family == 'webpage')
+                        $this->game->must_pay = $property->rent * ($dice1 + $dice2);
+                    else
+                        $this->game->must_pay = $property->rent;
+                    $this->game->active_action = 'must_pay';
                 }
                 break;
             case('fine'):
-                $game->must_pay = $property->price;
-                $game->active_action = 'must_pay_fine';
+                $this->game->must_pay = $property->price;
+                $this->game->active_action = 'must_pay_fine';
+                break;
             case('corner'):
-                if($property->family == 'start'){
+                if ($property->family == 'start' || $property->family == 'prison' || $property->family == 'free') {
                     $this->checkDoubles();
+                } elseif ($property->family == 'go_to_prison') {
+                    $this->changePlace(11, true);
+                    $this->game->active_action = 'end_turn';
                 }
+                break;
             case('chance'):
-                $chance = Chances::find(mt_rand(1,16));
-                if($chance->type == 'go'){
+                $chance = Chances::find(mt_rand(1, 16));
+                $this->createSystemMessage(Auth::user()->name . $chance->text);
+                if ($chance->type == 'go') {
                     $this->changePlace($chance->goto);
-                    if($this->field < $chance->goto)
+                    if ($this->field < $chance->goto)
                         $this->changeMoney($chance->amount, '+');
+
+                    $this->field = $chance->goto;
+                    $property = GameProperties::join('properties', 'game_properties.property_id', '=', 'properties.id')
+                        ->where('game_id', $this->lobby_id)
+                        ->where('property_id', $this->field)
+                        ->select('user_id', 'game_properties.rent', 'game_properties.price', 'family', 'type', 'name')
+                        ->first();
+
+                    if (!$property->rent) {
+                        $this->game->active_action = 'buy_or_decline';
+                    } elseif ($this->game->active_player == $property->user_id) {
+                        $this->checkDoubles();
+                    } else {
+                        if ($property->family == 'webpage')
+                            $this->game->must_pay = $property->rent * ($dice1 + $dice2);
+                        else
+                            $this->game->must_pay = $property->rent;
+                        $this->game->active_action = 'must_pay';
+                    }
+
                 } elseif ($chance->type == 'gain') {
                     $this->changeMoney($chance->amount, '+');
+                    $this->checkDoubles();
+                } elseif ($chance->type == 'ticket') {
+                    $this->game->must_pay = $chance->amount;
+                    $this->game->active_action = 'must_pay_fine';
+                } elseif ($chance->type == 'prison') {
+                    $this->changePlace(11, true);
+                    $this->game->active_action = 'end_turn';
                 }
                 break;
             default:
                 break;
         }
 
-        $game->save();
+        $this->game->save();
         return view('livewire.game');
     }
 
-    public function changeMoney($money, $op){
-        switch ($op){
+    public function createSystemMessage($text)
+    {
+        Chat::create([
+            'lobby_id' => $this->lobby_id,
+            'user_id' => 1,
+            'message' => $text
+        ]);
+    }
+
+    public function changeMoney($money, $op)
+    {
+        switch ($op) {
             case('+'):
-                if($this->player == 1){
+                if ($this->player == 1) {
                     $this->game_money->user1_money += $money;
-                } elseif ($this->player == 2){
+                } elseif ($this->player == 2) {
                     $this->game_money->user2_money += $money;
                 } elseif ($this->player == 2) {
                     $this->game_money->user3_money += $money;
@@ -185,9 +267,9 @@ class Game extends Component
                 }
                 break;
             case('-'):
-                if($this->player == 1){
+                if ($this->player == 1) {
                     $this->game_money->user1_money -= $money;
-                } elseif ($this->player == 2){
+                } elseif ($this->player == 2) {
                     $this->game_money->user2_money -= $money;
                 } elseif ($this->player == 2) {
                     $this->game_money->user3_money -= $money;
@@ -198,21 +280,33 @@ class Game extends Component
             default:
                 break;
         }
+        $this->game_money->save();
     }
 
-    public function changePlace($place){
-        if($this->player == 1){
+    public function changePlace($place, $prison = false)
+    {
+        if ($this->player == 1) {
             $this->game->user1_field = $place;
-        } elseif ($this->player == 2){
+            if ($prison)
+                $this->game->prison_user1 = 1;
+        } elseif ($this->player == 2) {
             $this->game->user2_field = $place;
+            if ($prison)
+                $this->game->prison_user2 = 1;
         } elseif ($this->player == 2) {
             $this->game->user3_field = $place;
+            if ($prison)
+                $this->game->prison_user3 = 1;
         } elseif ($this->player == 4) {
             $this->game->user4_field = $place;
+            if ($prison)
+                $this->game->prison_user4 = 1;
         }
+        $this->game->save();
     }
 
-    public function buyCell(){
+    public function buyCell()
+    {
         $property = GameProperties::where('game_id', $this->lobby_id)
             ->where('property_id', $this->field)
             ->first();
@@ -222,21 +316,68 @@ class Game extends Component
 
         $this->game_money->save();
 
+        if ($this->properties[$this->field - 1]->family == 'science') {
+            $arr = array($this->live_properties[5]->user_id, $this->live_properties[15]->user_id, $this->live_properties[25]->user_id, $this->live_properties[35]->user_id);
+            $tmp = array_keys($arr, $this->player);
 
+            if (count($tmp) == 0) {
+                $property->rent = 25;
+            } elseif (count($tmp) == 1) {
+                $property->rent = 50;
+                GameProperties::join('properties', 'game_properties.property_id', '=', 'properties.id')
+                    ->where('game_id', $this->lobby_id)
+                    ->where('user_id', $this->player)
+                    ->where('family', 'science')
+                    ->update(['game_properties.rent' => 50]);
+            } elseif (count($tmp) == 2) {
+                $property->rent = 100;
+                GameProperties::join('properties', 'game_properties.property_id', '=', 'properties.id')
+                    ->where('game_id', $this->lobby_id)
+                    ->where('user_id', $this->player)
+                    ->where('family', 'science')
+                    ->update(['game_properties.rent' => 100]);
+            } elseif (count($tmp) == 3) {
+                $property->rent = 200;
+                GameProperties::join('properties', 'game_properties.property_id', '=', 'properties.id')
+                    ->where('game_id', $this->lobby_id)
+                    ->where('user_id', $this->player)
+                    ->where('family', 'science')
+                    ->update(['game_properties.rent' => 200]);
+            }
+        } elseif ($this->properties[$this->field - 1]->family == 'webpage') {
+            $arr = array($this->live_properties[12]->user_id, $this->live_properties[28]->user_id);
+            $tmp = array_keys($arr, $this->player);
+
+            if (count($tmp) == 0) {
+                $property->rent = 4;
+            } elseif (count($tmp) == 1) {
+                GameProperties::where('game_id', $this->lobby_id)
+                    ->where(function ($query) {
+                        $query->where('property_id', 13)
+                            ->orWhere('property_id', 29);
+                    })
+                    ->update(['rent' => 10]);
+            }
+        } else {
+            $property->rent = $this->properties[$this->field - 1]->rent;
+        }
         $property->user_id = $this->player;
-        $property->rent = Properties::find($this->field)->rent;
         $property->save();
-
-
-        $this->game->active_action = 'dice_throwing';
-        $this->game->save();
 
         $this->checkDoubles();
         return view('livewire.game');
     }
 
-    public function payFine(){
+    public function payFine()
+    {
         $this->changeMoney($this->game->must_pay, '-');
+
+        if($this->game->active_action = 'must_pay'){
+            $temp = $this->player;
+            $this->player = $this->live_properties[$this->field - 1]->user_id;
+            $this->changeMoney($this->game->must_pay, '+');
+            $this->player = $temp;
+        }
 
         $this->game_money->save();
 
@@ -247,32 +388,15 @@ class Game extends Component
         return view('livewire.game');
     }
 
-    public function checkDoubles() {
-        if($this->game->first_dice == $this->game->second_dice && $this->doubles < 2){
+    public function checkDoubles()
+    {
+        if ($this->game->first_dice == $this->game->second_dice && $this->doubles < 2) {
             $this->doubles++;
             $this->game->active_action = 'dice_throwing';
         } elseif ($this->game->first_dice == $this->game->second_dice) {
-            switch($this->player){
-                case(1):
-                    $this->game->user1_field = 11;
-                    $this->game->prison_user1 = 1;
-                    break;
-                case(2):
-                    $this->game->prison_user2 = 1;
-                    $this->game->user2_field = 11;
-                    break;
-                case(3):
-                    $this->game->prison_user3 = 1;
-                    $this->game->user2_field = 11;
-                    break;
-                case(4):
-                    $this->game->prison_user4 = 1;
-                    $this->game->user2_field = 11;
-                    break;
-                default:
-                    break;
-            }
+            $this->changePlace(11, true);
             $this->doubles = 0;
+            $this->game->active_action = 'end_turn';
         } else {
             $this->game->active_action = 'end_turn';
             $this->doubles = 0;
@@ -282,39 +406,115 @@ class Game extends Component
         return view('livewire.game');
     }
 
-    //
-    public function surrender() {
+    //TODO poddanie się
+    public function surrender()
+    {
+        switch ($this->player){
+            case('1'):
+                $this->game->user1_field = null;
+                $this->game_money->user1_money = 0;
+                break;
+            case('2'):
+                $this->game->user2_field = null;
+                $this->game_money->user2_money = 0;
+                break;
+            case('3'):
+                $this->game->user3_field = null;
+                $this->game_money->user3_money = 0;
+                break;
+            case('4'):
+                $this->game->user4_field = null;
+                $this->game_money->user4_money = 0;
+                break;
+            default:
+                break;
+        }
+
+        $this->game->save();
+
+        GameProperties::where('user_id', $this->player)
+            ->update([
+                'rent' => null,
+                'user_id' => null
+            ]);
+
+        if($this->game->active_player == $this->player){
+            if($this->game->active_action == 'must_pay'){
+                $temp = $this->player;
+                $this->player = $this->live_properties[$this->field - 1]->user_id;
+                $this->changeMoney($this->game->must_pay, '+');
+                $this->player = $temp;
+            }
+            $this->endTurn(true);
+        }
+
         return view('livewire.game');
     }
 
-    public function declineBuying() {
+    //TODO zrezygnowanie z kupna
+    public function declineBuying()
+    {
         $this->checkDoubles();
     }
 
     //funkcja skończenia kolejki
-    public function endTurn(){
+    public function endTurn($surr = false)
+    {
         $fields = [$this->game->user1_field, $this->game->user2_field,
             $this->game->user3_field, $this->game->user4_field];
 
+
         $players = [$this->lobby->user1_id, $this->lobby->user2_id,
             $this->lobby->user3_id, $this->lobby->user4_id];
+
+        if($surr){
+            $sum = 0;
+            $winner = 0;
+            for($i = 0; $i < 4; $i++){
+                if($fields[$i] == null)
+                    $sum++;
+                else
+                    $winner = $players[$i];
+            }
+            if($sum >= 3){
+                $this->game->active_action = 'end_game';
+                $this->lobby->is_ended = 1;
+                $this->lobby->winner_id = $winner;
+
+                Stats::where('user_id', $this->lobby->winner_id)
+                        ->increment('games_won', 1);
+
+
+                for($i = 0; $i < 4; $i++){
+                    if($players[$i] != null)
+                        Stats::where('user_id', $players[$i])
+                            ->increment('games_played', 1);
+                }
+
+                $this->lobby->save();
+                $this->game->save();
+
+                $this->createSystemMessage(Auth::user()->name . ' poddał się.');
+                return view('livewire.game');
+            }
+        }
 
         $arr_player = $this->player;
         $temp = 0;
         $next_player = null;
 
-        while($temp < 3){
-            if($arr_player > 3)
+        while ($temp < 3) {
+            if ($arr_player > 3)
                 $arr_player = 0;
-            if($fields[$arr_player]){
+            if ($fields[$arr_player] && $fields[$arr_player] != 0) {
                 $next_player = $players[$arr_player];
                 break;
             } else
                 $temp++;
-                $arr_player++;
+            $arr_player++;
         }
 
-        if(!$next_player){
+        if (!$next_player) {
             $this->game->active_action = 'winner';
         } else {
             $this->game->active_action = 'dice_throwing';
@@ -340,16 +540,16 @@ class Game extends Component
         $this->game_items = GameItems::where('game_id', $this->lobby_id)->first();
         $this->game = Games::where('game_id', $this->lobby_id)->first();
 
-        if(Auth::id() == $this->lobby->user1_id){
+        if (Auth::id() == $this->lobby->user1_id) {
             $this->field = $this->game->user1_field;
             $this->player = 1;
-        } elseif(Auth::id() == $this->lobby->user2_id){
+        } elseif (Auth::id() == $this->lobby->user2_id) {
             $this->field = $this->game->user2_field;
             $this->player = 2;
-        } elseif(Auth::id() == $this->lobby->user3_id){
+        } elseif (Auth::id() == $this->lobby->user3_id) {
             $this->field = $this->game->user3_field;
             $this->player = 3;
-        } elseif(Auth::id() == $this->lobby->user4_id){
+        } elseif (Auth::id() == $this->lobby->user4_id) {
             $this->field = $this->game->user4_field;
             $this->player = 4;
         }

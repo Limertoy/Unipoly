@@ -130,7 +130,8 @@
                                             class="firstLine firstLine-top rotation2">
                                             <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && $live_properties[$i]->rent)
                                                 <br>Opłata:<br> {{$live_properties[$i]->rent}}
-                                                zł @elseif($properties[$i]->type == 'field') <br>
+                                                @if($properties[$i]->family == 'webpage')x @else
+                                                    zł @endif @elseif($properties[$i]->type == 'field') <br>
                                                 {{$live_properties[$i]->price}}zł @endif </div>
                                     @endif
                                     <div class="player-tokens topSide">
@@ -170,7 +171,8 @@
                                             <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
                                                 <br>{{$live_properties[$i]->price}}
                                                 zł @elseif($live_properties[$i]->rent) <br>
-                                                Opłata: {{$live_properties[$i]->rent}}zł @endif </div>
+                                                Opłata: {{$live_properties[$i]->rent}}@if($properties[$i]->family == 'webpage')
+                                                    x @else zł @endif @endif</div>
                                         <div class="player-tokens leftSide">
                                             @if($game_items->user1_item && ($game->user1_field == $properties[$i]->id))
                                                 <span class="player-pawn"
@@ -262,7 +264,8 @@
                                             <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && $live_properties[$i]->rent)
                                                 <br>Opłata:<br> {{$live_properties[$i]->rent}}
                                                 zł@elseif($properties[$i]->type == 'field') <br>
-                                                {{$live_properties[$i]->price}}zł @endif </div>
+                                                {{$live_properties[$i]->price}}zł
+                                            @endif </div>
                                     @endif
                                     <div class="player-tokens bottomSide">
                                         @if($game_items->user1_item && ($game->user1_field == $properties[$i]->id))
@@ -289,7 +292,7 @@
                         </div>
                     </div>
                 </div>
-                {{------------------------------------ TABLICA -----------------------------}}
+                {{---------------------------------------------------------------------}}
             </div>
         </div>
         <div class="col-4">
@@ -311,15 +314,15 @@
             @else
                 @if($game->active_user_id == Auth::id())
                     @if($game->active_action == 'dice_throwing')
-                    <div class="cell-info cell-roll">
-                        <p style="padding-top: 2vh">Twoja kolejka!</p><br>
-                        <form wire:submit.prevent="throwDice" style="display: inline-block">
-                            <button class="btn btn-lg btn-success" style="width: 10vw;">Rzuć kośćmi</button>
-                        </form>
-                        <form wire:submit.prevent="surrender" style="display: inline-block">
-                            <button class="btn btn-lg btn-danger" style="width: 10vw;">Poddaj się</button>
-                        </form>
-                    </div>
+                        <div class="cell-info cell-roll">
+                            <p style="padding-top: 2vh">Twoja kolejka!</p><br>
+                            <form wire:submit.prevent="throwDice" style="display: inline-block">
+                                <button class="btn btn-lg btn-success" style="width: 10vw;">Rzuć kośćmi</button>
+                            </form>
+                            <form wire:submit.prevent="surrender" style="display: inline-block">
+                                <button class="btn btn-lg btn-danger" style="width: 10vw;">Poddaj się</button>
+                            </form>
+                        </div>
                     @elseif($game->active_action == 'buy_or_decline')
                         <div class="cell-info cell-roll">
                             <p style="padding-top: 2vh">Pole jest wolne, możesz go kupić</p><br>
@@ -332,7 +335,7 @@
                         </div>
                     @elseif($game->active_action == 'must_pay_fine')
                         <div class="cell-info cell-roll">
-                            <p style="padding-top: 2vh">Musisz zapłacić mandat</p><br>
+                            <p style="padding-top: 2vh">Musisz zapłacić mandat: {{$game->must_pay}}zł</p><br>
                             <form wire:submit.prevent="payFine" style="display: inline-block">
                                 <button class="btn btn-lg btn-success" style="width: 10vw;">Zapłać</button>
                             </form>
@@ -360,6 +363,11 @@
                     @elseif($game->active_action == 'winner')
                         <div class="cell-info cell-roll">
                             <p style="padding-top: 7vh">Wygrałeś! Gratulacje!</p><br>
+                        </div>
+
+                    @else
+                        <div class="cell-info cell-roll" style="visibility: hidden">
+                            <p style="padding-top: 7vh"></p><br>
                         </div>
                     @endif
                 @else
