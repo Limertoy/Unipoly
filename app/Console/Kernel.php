@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
                'user_id' => 1,
                'message' => 'Czat był oczyszczony.'
            ]);
-        })->daily();
+        })->twiceDaily(0, 12);
     }
 
     /**

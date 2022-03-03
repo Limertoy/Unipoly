@@ -66,6 +66,23 @@ body {
     width: 7.5vw;
 }
 
+.dropdown-table {
+    z-index: 8;
+    text-align: center;
+    padding-bottom: 0.5vh;
+    position: absolute!important;
+    background-color: #f1f1f1;
+    box-shadow: 0vw 0.4vw 0.8vw 0vw rgba(0,0,0,0.2);
+    border: 1px solid;
+    border-radius: 1vw;
+    width: 10vw;
+}
+
+.dropdown-table.name {
+    font-size: 0.75vw;
+    color: black!important;
+}
+
 .form-responsive {
     height: 4vh;
     font-size: 1.5vh!important;

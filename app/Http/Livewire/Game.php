@@ -25,6 +25,8 @@ class Game extends Component
     public $field, $player;
     public $doubles = 0;
 
+    public $form_property_id;
+
     public function refresh()
     {
         $this->lobby = Lobby::with('user1')

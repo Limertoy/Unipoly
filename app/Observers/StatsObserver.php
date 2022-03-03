@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class StatsObserver
 {
-    public $mission_id = 0;
+    public static $mission_id;
 
     /**
      * Handle the Stats "created" event.
@@ -32,21 +32,21 @@ class StatsObserver
     public function updating(Stats $stats)
     {
         if ($stats->isDirty('friends_added'))
-            $this->mission_id = 1;
+            self::$mission_id = 1;
         elseif ($stats->isDirty('games_played'))
-            $this->mission_id = 2;
+            self::$mission_id = 2;
         elseif ($stats->isDirty('games_won')) {
             $user_mission = UsersMissions::where('mission_id', 3)
                 ->where('user_id', Auth::id())
                 ->first();
             if (!$user_mission->is_done)
-                $this->mission_id = 3;
+                self::$mission_id = 3;
             else
-                $this->mission_id = 5;
+                self::$mission_id = 5;
         } elseif ($stats->isDirty('messages_sent'))
-            $this->mission_id = 4;
+            self::$mission_id = 4;
         elseif ($stats->isDirty('banned_times'))
-            $this->mission_id = 6;
+            self::$mission_id = 6;
     }
 
     /**
@@ -57,7 +57,8 @@ class StatsObserver
      */
     public function updated(Stats $stats)
     {
-        $user_mission = UsersMissions::where('mission_id', $this->mission_id)
+
+        $user_mission = UsersMissions::where('mission_id', self::$mission_id)
             ->where('user_id', Auth::id())
             ->first();
 

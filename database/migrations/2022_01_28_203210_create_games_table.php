@@ -23,10 +23,10 @@ class CreateGamesTable extends Migration
             $table->integer('active_player')->nullable();
             $table->string('active_action')->nullable();
             $table->integer('must_pay')->nullable();
-            $table->integer('prison_user1')->nullable();
-            $table->integer('prison_user2')->nullable();
-            $table->integer('prison_user3')->nullable();
-            $table->integer('prison_user4')->nullable();
+            $table->integer('prison_user1')->default(0);
+            $table->integer('prison_user2')->default(0);
+            $table->integer('prison_user3')->default(0);
+            $table->integer('prison_user4')->default(0);
             $table->integer('first_dice')->nullable();
             $table->integer('second_dice')->nullable();
             $table->timestamps();

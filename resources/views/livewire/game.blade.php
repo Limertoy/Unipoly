@@ -116,8 +116,8 @@
                     <div class="mainSquare">
                         <div class="row-game top-game">
                             @for($i = 20; $i < 31; $i++)
-                                <div
-                                    class="@if($properties[$i]->type == 'corner')square2 @else square1 @endif topSide {{$properties[$i]->family}}">
+                                <div @click="topside = true" x-data="{ topside: false }"
+                                     class="@if($properties[$i]->type == 'corner')square2 @else square1 @endif topSide {{$properties[$i]->family}}">
                                     @if($properties[$i]->type == 'corner')
                                         <span
                                             class="corner corner{{$properties[$i]->id}}">{{$properties[$i]->name}}</span>
@@ -136,10 +136,12 @@
                                     @endif
                                     <div class="player-tokens topSide">
                                         @if($game_items->user1_item && ($game->user1_field == $properties[$i]->id))
-                                            <span class="player-pawn" id="player1-{{$game_items->user1_item}}"></span>
+                                            <span class="player-pawn"
+                                                  id="player1-{{$game_items->user1_item}}"></span>
                                         @endif
                                         @if($game_items->user2_item && ($game->user2_field == $properties[$i]->id))
-                                            <span class="player-pawn" id="player2-{{$game_items->user2_item}}"></span>
+                                            <span class="player-pawn"
+                                                  id="player2-{{$game_items->user2_item}}"></span>
                                         @endif
                                         @if($game_items->user3_item)
                                             @if($game->user3_field == $properties[$i]->id)
@@ -154,6 +156,28 @@
                                             @endif
                                         @endif
                                     </div>
+                                    @if($properties[$i]->type == 'field')
+                                        <div x-show="topside" @click.away="topside = false" class="dropdown-table name">
+                                            <p>@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
+                                            @if($live_properties[$i]->user_id == $player)
+                                                <form wire:submit.prevent="buyHouse">
+                                                    <button class="btn btn-success form-responsive" type="submit">
+                                                        Kup domek
+                                                    </button>
+                                                    <input type="hidden" wire:model="form_property_id"
+                                                           value="{{$properties[$i]->id}}">
+                                                </form>
+                                                <form wire:submit.prevent="sellHouse" style="padding-top: 1vh">
+                                                    <button class="btn btn-danger form-responsive" type="submit">
+                                                        @if($live_properties[$i]->house)Sprzedaj domek @else Załóź
+                                                        pole @endif
+                                                    </button>
+                                                    <input type="hidden" wire:model="form_property_id"
+                                                           value="{{$properties[$i]->id}}">
+                                                </form>
+                                            @endif
+                                        </div>
+                                    @endif
                                 </div>
                             @endfor
                         </div>
@@ -161,7 +185,8 @@
                         <div class="row-game center-game">
                             <div class="square2">
                                 @for($i = 19; $i > 10; $i--)
-                                    <div class="squareSide leftSide {{$properties[$i]->family}}">
+                                    <div class="squareSide leftSide {{$properties[$i]->family}}" @click="left = true"
+                                         x-data="{ left: false }">
                                         @if($properties[$i]->type == 'field')
                                             <div
                                                 class="headerSide header-left white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
@@ -195,6 +220,28 @@
                                                 @endif
                                             @endif
                                         </div>
+                                        @if($properties[$i]->type == 'field')
+                                            <div x-show="left" @click.away="left = false" class="dropdown-table name">
+                                                <p>@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
+                                                @if($live_properties[$i]->user_id == $player)
+                                                    <form wire:submit.prevent="buyHouse">
+                                                        <button class="btn btn-success form-responsive" type="submit">
+                                                            Kup domek
+                                                        </button>
+                                                        <input type="hidden" wire:model="form_property_id"
+                                                               value="{{$properties[$i]->id}}">
+                                                    </form>
+                                                    <form wire:submit.prevent="sellHouse" style="padding-top: 1vh">
+                                                        <button class="btn btn-danger form-responsive" type="submit">
+                                                            @if($live_properties[$i]->house)Sprzedaj domek @else Załóź
+                                                            pole @endif
+                                                        </button>
+                                                        <input type="hidden" wire:model="form_property_id"
+                                                               value="{{$properties[$i]->id}}">
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        @endif
                                     </div>
                                 @endfor
                             </div>
@@ -209,7 +256,8 @@
 
                             <div class="square2">
                                 @for($i = 31; $i < 40; $i++)
-                                    <div class="squareSide rightSide {{$properties[$i]->family}}">
+                                    <div class="squareSide rightSide {{$properties[$i]->family}}" @click="right = true"
+                                         x-data="{ right: false }">
                                         @if($properties[$i]->type == 'field')
                                             <div
                                                 class="headerSide header-right white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
@@ -242,6 +290,28 @@
                                                 @endif
                                             @endif
                                         </div>
+                                        @if($properties[$i]->type == 'field')
+                                            <div x-show="right" @click.away="right = false" class="dropdown-table name">
+                                                <p>@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
+                                                @if($live_properties[$i]->user_id == $player)
+                                                    <form wire:submit.prevent="buyHouse">
+                                                        <button class="btn btn-success form-responsive" type="submit">
+                                                            Kup domek
+                                                        </button>
+                                                        <input type="hidden" wire:model="form_property_id"
+                                                               value="{{$properties[$i]->id}}">
+                                                    </form>
+                                                    <form wire:submit.prevent="sellHouse" style="padding-top: 1vh">
+                                                        <button class="btn btn-danger form-responsive" type="submit">
+                                                            @if($live_properties[$i]->house)Sprzedaj domek @else Załóź
+                                                            pole @endif
+                                                        </button>
+                                                        <input type="hidden" wire:model="form_property_id"
+                                                               value="{{$properties[$i]->id}}">
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        @endif
                                     </div>
                                 @endfor
                             </div>

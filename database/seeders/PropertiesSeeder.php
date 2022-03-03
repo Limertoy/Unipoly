@@ -61,6 +61,7 @@ class PropertiesSeeder extends Seeder
             [
                 'id' => 5,
                 'name' => 'UBEZPIE- CZENIE',
+                'full_name' => 'UBEZPIECZENIE',
                 'price' => 200,
                 'type' => 'fine',
                 'family' => 'fine'
@@ -68,6 +69,7 @@ class PropertiesSeeder extends Seeder
             [
                 'id' => 6,
                 'name' => 'NAUKI HUMAN.',
+                'full_name' => 'NAUKI HUMANISTYCZNE',
                 'price' => 200,
                 'house1' => 25,
                 'house2' => 50,
@@ -149,6 +151,7 @@ class PropertiesSeeder extends Seeder
             [
                 'id' => 13,
                 'name' => 'BUR',
+                'full_name' => 'BIBLIOTEKA UNIWERSYTETU RZESZOWSKIEGO',
                 'price' => 150,
                 'type' => 'field',
                 'family' => 'webpage'
@@ -195,6 +198,7 @@ class PropertiesSeeder extends Seeder
             [
                 'id' => 17,
                 'name' => 'MUR',
+                'full_name' => 'MAŁY UNIWERSYTET RZESZOWSKI',
                 'price' => 180,
                 'rent' => 14,
                 'house1' => 70,
@@ -216,6 +220,7 @@ class PropertiesSeeder extends Seeder
             [
                 'id' => 19,
                 'name' => 'UTW',
+                'full_name' => 'UNIWERSYTET TRZECIEGO WIEKU',
                 'price' => 180,
                 'rent' => 14,
                 'house1' => 70,
@@ -300,6 +305,7 @@ class PropertiesSeeder extends Seeder
             [
                 'id' => 26,
                 'name' => 'NAUKI PRZYR.',
+                'full_name' => 'NAUKI PRZYRODNICZE',
                 'price' => 200,
                 'house1' => 25,
                 'house2' => 50,
@@ -325,6 +331,7 @@ class PropertiesSeeder extends Seeder
             [
                 'id' => 28,
                 'name' => 'LABORA- TORIA',
+                'full_name' => 'LABORATORIA',
                 'price' => 260,
                 'rent' => 22,
                 'house1' => 110,
@@ -339,6 +346,7 @@ class PropertiesSeeder extends Seeder
             [
                 'id' => 29,
                 'name' => 'WU',
+                'full_name' => 'WIRTUALNA UCZELNIA',
                 'price' => 150,
                 'type' => 'field',
                 'family' => 'webpage'
@@ -416,6 +424,7 @@ class PropertiesSeeder extends Seeder
             [
                 'id' => 36,
                 'name' => 'NAUKI SPOŁ.',
+                'full_name' => 'NAUKI SPOŁECZNE',
                 'price' => 200,
                 'house1' => 25,
                 'house2' => 50,
