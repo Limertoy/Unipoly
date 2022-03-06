@@ -20,8 +20,7 @@ class CreateGamePropertiesTable extends Migration
             $table->foreignId('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->integer('price');
             $table->integer('rent')->nullable();
-            $table->boolean('is_turned')->default('0');
-            $table->integer('house')->nullable();
+            $table->integer('house')->default(0);
             $table->timestamps();
         });
     }

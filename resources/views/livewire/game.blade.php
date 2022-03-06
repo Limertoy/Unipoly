@@ -1,4 +1,4 @@
-<div wire:poll.2000ms="refresh">
+<div wire:poll.2000ms="refresh" xmlns:wire="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-8">
             <div class="container players">
@@ -124,7 +124,15 @@
                                     @else
                                         @if($properties[$i]->type == 'field')
                                             <div
-                                                class="header-game header-top white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
+                                                class="header-game header-top white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif">
+                                                @if($live_properties[$i]->house == 5)
+                                                    <span style="font-size: 2vh; padding-left: 32%">🌟</span>
+                                                @elseif($live_properties[$i]->house > 0)
+                                                    @for($house = 0; $house < $live_properties[$i]->house; $house++)
+                                                        <span style="font-size: 1.3vh">🏠</span>
+                                                    @endfor
+                                                @endif
+                                            </div>
                                         @endif
                                         <div
                                             class="firstLine firstLine-top rotation2">
@@ -158,23 +166,23 @@
                                     </div>
                                     @if($properties[$i]->type == 'field')
                                         <div x-show="topside" @click.away="topside = false" class="dropdown-table name">
-                                            <p>@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
+                                            <p style="padding-top: 1vh">@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
                                             @if($live_properties[$i]->user_id == $player)
-                                                <form wire:submit.prevent="buyHouse">
-                                                    <button class="btn btn-success form-responsive" type="submit">
+                                                @if($game->active_user_id == Auth::id() && $game->active_action == 'dice_throwing')
+                                                    <button class="btn btn-success form-responsive"
+                                                            wire:click="buyHouse({{ $properties[$i]->id }})"
+                                                            @click="topside = false">
                                                         Kup domek
                                                     </button>
-                                                    <input type="hidden" wire:model="form_property_id"
-                                                           value="{{$properties[$i]->id}}">
-                                                </form>
-                                                <form wire:submit.prevent="sellHouse" style="padding-top: 1vh">
-                                                    <button class="btn btn-danger form-responsive" type="submit">
-                                                        @if($live_properties[$i]->house)Sprzedaj domek @else Załóź
-                                                        pole @endif
+                                                @endif
+                                                <div style="padding-top: 1vh">
+                                                    <button class="btn btn-danger form-responsive"
+                                                            wire:click="sellHouse({{ $properties[$i]->id }})"
+                                                            style="font-size: 1.2vh!important;">
+                                                        @if($live_properties[$i]->house)Sprzedaj domek @else Sprzedaj za
+                                                        50% @endif
                                                     </button>
-                                                    <input type="hidden" wire:model="form_property_id"
-                                                           value="{{$properties[$i]->id}}">
-                                                </form>
+                                                </div>
                                             @endif
                                         </div>
                                     @endif
@@ -189,15 +197,25 @@
                                          x-data="{ left: false }">
                                         @if($properties[$i]->type == 'field')
                                             <div
-                                                class="headerSide header-left white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
+                                                class="headerSide header-left white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"
+                                                style="display: inline">
+                                                @if($live_properties[$i]->house == 5)
+                                                    <span style="font-size: 2vh;">🌟</span>
+                                                @elseif($live_properties[$i]->house > 0)
+                                                    @for($house = 0; $house < $live_properties[$i]->house; $house++)
+                                                        <span style="font-size: 1vh;">🏠</span>
+                                                    @endfor
+                                                @endif
+                                            </div>
                                         @endif
                                         <div
                                             class="firstLine firstLine-left {{$properties[$i]->type}} rotation1">
-                                            <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
+                                            <b>{{$properties[$i]->name}}</b>
+                                            @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
                                                 <br>{{$live_properties[$i]->price}}
                                                 zł @elseif($live_properties[$i]->rent) <br>
-                                                Opłata: {{$live_properties[$i]->rent}}@if($properties[$i]->family == 'webpage')
-                                                    x @else zł @endif @endif</div>
+                                            Opłata: {{$live_properties[$i]->rent}}@if($properties[$i]->family == 'webpage')
+                                                x @else zł @endif @endif</div>
                                         <div class="player-tokens leftSide">
                                             @if($game_items->user1_item && ($game->user1_field == $properties[$i]->id))
                                                 <span class="player-pawn"
@@ -222,23 +240,23 @@
                                         </div>
                                         @if($properties[$i]->type == 'field')
                                             <div x-show="left" @click.away="left = false" class="dropdown-table name">
-                                                <p>@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
+                                                <p style="padding-top: 1vh">@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
                                                 @if($live_properties[$i]->user_id == $player)
-                                                    <form wire:submit.prevent="buyHouse">
-                                                        <button class="btn btn-success form-responsive" type="submit">
+                                                    @if($game->active_user_id == Auth::id() && $game->active_action == 'dice_throwing')
+                                                        <button class="btn btn-success form-responsive"
+                                                                wire:click="buyHouse({{ $properties[$i]->id }})"
+                                                                @click="left = false">
                                                             Kup domek
+                                                        </button><br>
+                                                    @endif
+                                                    <div style="padding-top: 1vh">
+                                                        <button class="btn btn-danger form-responsive"
+                                                                wire:click="sellHouse({{ $properties[$i]->id }})"
+                                                                style="font-size: 1.2vh!important;">
+                                                            @if($live_properties[$i]->house)Sprzedaj domek @else
+                                                                Sprzedaj za 50% @endif
                                                         </button>
-                                                        <input type="hidden" wire:model="form_property_id"
-                                                               value="{{$properties[$i]->id}}">
-                                                    </form>
-                                                    <form wire:submit.prevent="sellHouse" style="padding-top: 1vh">
-                                                        <button class="btn btn-danger form-responsive" type="submit">
-                                                            @if($live_properties[$i]->house)Sprzedaj domek @else Załóź
-                                                            pole @endif
-                                                        </button>
-                                                        <input type="hidden" wire:model="form_property_id"
-                                                               value="{{$properties[$i]->id}}">
-                                                    </form>
+                                                    </div>
                                                 @endif
                                             </div>
                                         @endif
@@ -246,13 +264,42 @@
                                 @endfor
                             </div>
 
-                            {{-- Centrum pola --}}
+                            {{-- Centrum pola -------------------------------------------------}}
                             <div class="square9">
                                 <div class="logoBox">
                                     <span class="logoName">UniPoly</span>
                                 </div>
+                                <div style="position: absolute">
+                                    <div class="info-message" x-data="{ shown: false, timeout: null }"
+                                         x-init="@this.on('bought', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 3000); })"
+                                         x-show.transition.opacity.out.duration.4000ms="shown"
+                                         style="display: none;">Już kupiłeś domek w tym rzucie.<br>Możesz kupić w
+                                        następnym.
+                                    </div>
+                                    <div class="info-message" x-data="{ shown: false, timeout: null }"
+                                         x-init="@this.on('maxHouses', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 3000); })"
+                                         x-show.transition.opacity.out.duration.4000ms="shown"
+                                         style="display: none;">Już masz maksymalną ilość<br>domków.
+                                    </div>
+                                    <div class="info-message" x-data="{ shown: false, timeout: null }"
+                                         x-init="@this.on('not_enough_fields', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 3000); })"
+                                         x-show.transition.opacity.out.duration.4000ms="shown"
+                                         style="display: none;">Nie masz wszystkich pól.
+                                    </div>
+                                    <div class="info-message" x-data="{ shown: false, timeout: null }"
+                                         x-init="@this.on('cant_sold_this', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 3000); })"
+                                         x-show.transition.opacity.out.duration.4000ms="shown"
+                                         style="display: none;">Nie możesz tego sprzedać, ponieważ<br> masz domki na
+                                        innych polach.
+                                    </div>
+                                    <div class="info-message" x-data="{ shown: false, timeout: null }"
+                                         x-init="@this.on('not_enough_money', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 3000); })"
+                                         x-show.transition.opacity.out.duration.4000ms="shown"
+                                         style="display: none;">Brakuje ci pieniędzy.
+                                    </div>
+                                </div>
                             </div>
-                            {{------------------}}
+                            {{--------------------------------------------------------------------}}
 
                             <div class="square2">
                                 @for($i = 31; $i < 40; $i++)
@@ -260,14 +307,24 @@
                                          x-data="{ right: false }">
                                         @if($properties[$i]->type == 'field')
                                             <div
-                                                class="headerSide header-right white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
+                                                class="headerSide header-right white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"
+                                                style="display: inline">
+                                                @if($live_properties[$i]->house == 5)
+                                                    <span style="font-size: 2vh;">🌟</span>
+                                                @elseif($live_properties[$i]->house > 0)
+                                                    @for($house = 0; $house < $live_properties[$i]->house; $house++)
+                                                        <span style="font-size: 1vh;">🏠</span>
+                                                    @endfor
+                                                @endif
+                                            </div>
                                         @endif
                                         <div
                                             class="firstLine firstLine-right {{$properties[$i]->type}} rotation1">
-                                            <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
+                                            <b>{{$properties[$i]->name}}</b>
+                                            @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
                                                 <br>{{$live_properties[$i]->price}}
                                                 zł @elseif($live_properties[$i]->rent) <br>
-                                                Opłata: {{$live_properties[$i]->rent}}zł @endif </div>
+                                            Opłata: {{$live_properties[$i]->rent}}zł @endif </div>
                                         <div class="player-tokens rightSide">
                                             @if($game_items->user1_item && ($game->user1_field == $properties[$i]->id))
                                                 <span class="player-pawn"
@@ -292,23 +349,23 @@
                                         </div>
                                         @if($properties[$i]->type == 'field')
                                             <div x-show="right" @click.away="right = false" class="dropdown-table name">
-                                                <p>@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
+                                                <p style="padding-top: 1vh">@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
                                                 @if($live_properties[$i]->user_id == $player)
-                                                    <form wire:submit.prevent="buyHouse">
-                                                        <button class="btn btn-success form-responsive" type="submit">
+                                                    @if($game->active_user_id == Auth::id() && $game->active_action == 'dice_throwing')
+                                                        <button class="btn btn-success form-responsive"
+                                                                wire:click="buyHouse({{ $properties[$i]->id }})"
+                                                                @click="right = false">
                                                             Kup domek
+                                                        </button><br>
+                                                    @endif
+                                                    <div style="padding-top: 1vh">
+                                                        <button class="btn btn-danger form-responsive"
+                                                                wire:click="sellHouse({{ $properties[$i]->id }})"
+                                                                style="font-size: 1.2vh!important;">
+                                                            @if($live_properties[$i]->house)Sprzedaj domek @else
+                                                                Sprzedaj za 50% @endif
                                                         </button>
-                                                        <input type="hidden" wire:model="form_property_id"
-                                                               value="{{$properties[$i]->id}}">
-                                                    </form>
-                                                    <form wire:submit.prevent="sellHouse" style="padding-top: 1vh">
-                                                        <button class="btn btn-danger form-responsive" type="submit">
-                                                            @if($live_properties[$i]->house)Sprzedaj domek @else Załóź
-                                                            pole @endif
-                                                        </button>
-                                                        <input type="hidden" wire:model="form_property_id"
-                                                               value="{{$properties[$i]->id}}">
-                                                    </form>
+                                                    </div>
                                                 @endif
                                             </div>
                                         @endif
@@ -319,15 +376,23 @@
 
                         <div class="row-game top-game">
                             @for($i = 10; $i >= 0; $i--)
-                                <div
-                                    class="@if($properties[$i]->type == 'corner')square2 @else square1 @endif bottomSide {{$properties[$i]->family}}">
+                                <div @click="bottomside = true" x-data="{ bottomside: false }"
+                                     class="@if($properties[$i]->type == 'corner')square2 @else square1 @endif bottomSide {{$properties[$i]->family}}">
                                     @if($properties[$i]->type == 'corner')
                                         <span
                                             class="corner corner{{$properties[$i]->id}}">{{$properties[$i]->name}}</span>
                                     @else
                                         @if($properties[$i]->type == 'field')
                                             <div
-                                                class="header-game header-bottom white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif"></div>
+                                                class="header-game header-bottom white @if($live_properties[$i]->user_id) user{{$live_properties[$i]->user_id}} @endif">
+                                                @if($live_properties[$i]->house == 5)
+                                                    <span style="font-size: 2vh; padding-left: 32%">🌟</span>
+                                                @elseif($live_properties[$i]->house > 0)
+                                                    @for($house = 0; $house < $live_properties[$i]->house; $house++)
+                                                        <span style="font-size: 1.3vh">🏠</span>
+                                                    @endfor
+                                                @endif
+                                            </div>
                                         @endif
                                         <div
                                             class="firstLine firstLine-bottom rotation2">
@@ -357,6 +422,29 @@
                                             @endif
                                         @endif
                                     </div>
+                                    @if($properties[$i]->type == 'field')
+                                        <div x-show="bottomside" @click.away="bottomside = false"
+                                             class="dropdown-table name">
+                                            <p style="padding-top: 1vh">@if($properties[$i]->full_name) {{$properties[$i]->full_name}} @else {{$properties[$i]->name}} @endif</p>
+                                            @if($live_properties[$i]->user_id == $player)
+                                                @if($game->active_user_id == Auth::id() && $game->active_action == 'dice_throwing')
+                                                <button class="btn btn-success form-responsive"
+                                                        wire:click="buyHouse({{ $properties[$i]->id }})"
+                                                        @click="bottomside = false">
+                                                    Kup domek
+                                                </button><br>
+                                                @endif
+                                                <div style="padding-top: 1vh">
+                                                    <button class="btn btn-danger form-responsive"
+                                                            wire:click="sellHouse({{ $properties[$i]->id }})"
+                                                            style="font-size: 1.2vh!important;">
+                                                        @if($live_properties[$i]->house)Sprzedaj domek @else Sprzedaj za
+                                                        50% @endif
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endif
                                 </div>
                             @endfor
                         </div>

@@ -83,6 +83,15 @@ body {
     color: black!important;
 }
 
+.info-message {
+    background-color: white;
+    font-size: 4vh;
+    color: darkred!important;
+    display: block;
+    margin-top: 1vh;
+    margin-left: 1vw;
+}
+
 .form-responsive {
     height: 4vh;
     font-size: 1.5vh!important;
