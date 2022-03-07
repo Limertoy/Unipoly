@@ -15,7 +15,7 @@
                             <p id="player1-info_cash">{{$game_money->user1_money}} zł</p>
                         </div>
                         <div x-show="open" @click.away="open = false" class="dropdown-content">
-                            @if($lobby->user1_id == Auth::id() && !$lobby->is_started && !$lobby->is_ended)
+                            @if($lobby->user1_id == Auth::id() && !$lobby->is_started || $lobby->user1_id == Auth::id() && $lobby->is_ended)
                                 <form action="{{route('exitGame')}}" method="POST">
                                     @method('PUT')
                                     @csrf
@@ -24,7 +24,7 @@
                                     <input type="hidden" name="lobby_id" value="{{$lobby->id}}">
                                 </form>
                             @elseif($lobby->user1_id == Auth::id())
-                                    <button class="btn btn-danger form-responsive" type="submit">Poddaj się</button>
+                                    <button class="btn btn-danger form-responsive" wire:click="surrender()">Poddaj się</button>
                             @else
                                 <a class="btn btn-primary form-responsive"
                                    href="{{route('profile', ['id' => $lobby->user1_id])}}"
@@ -51,7 +51,7 @@
                                     <input type="hidden" name="lobby_id" value="{{$lobby->id}}">
                                 </form>
                             @elseif($lobby->user2_id == Auth::id())
-                                <button class="btn btn-danger form-responsive" type="submit">Poddaj się</button>
+                                <button class="btn btn-danger form-responsive" wire:click="surrender()">Poddaj się</button>
                             @else
                                 <a class="btn btn-primary form-responsive"
                                    href="{{route('profile', ['id' => $lobby->user2_id])}}"
@@ -79,7 +79,7 @@
                                     <input type="hidden" name="lobby_id" value="{{$lobby->id}}">
                                 </form>
                             @elseif($lobby->user3_id == Auth::id())
-                                <button class="btn btn-danger form-responsive" type="submit">Poddaj się</button>
+                                <button class="btn btn-danger form-responsive" wire:click="surrender()">Poddaj się</button>
                             @else
                                 <a class="btn btn-primary form-responsive"
                                    href="{{route('profile', ['id' => $lobby->user3_id])}}"
@@ -97,7 +97,7 @@
                             <p id="player4-info_cash">{{$game_money->user4_money}} zł</p>
                         </div>
                         <div x-show="open" @click.away="open = false" class="dropdown-content">
-                            @if($lobby->user4_id == Auth::id() && !$lobby->is_started && !$lobby->is_ended)
+                            @if($lobby->user4_id == Auth::id() && !$lobby->is_started || $lobby->user4_id == Auth::id() && $lobby->is_ended)
                                 <form action="{{route('exitGame')}}" method="POST">
                                     @method('PUT')
                                     @csrf
@@ -107,7 +107,7 @@
                                     <input type="hidden" name="lobby_id" value="{{$lobby->id}}">
                                 </form>
                             @elseif($lobby->user4_id == Auth::id())
-                                <button class="btn btn-danger form-responsive" type="submit">Poddaj się</button>
+                                <button class="btn btn-danger form-responsive" wire:click="surrender()">Poddaj się</button>
                             @else
                                 <a class="btn btn-primary form-responsive"
                                    href="{{route('profile', ['id' => $lobby->user4_id])}}"

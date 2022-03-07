@@ -34,11 +34,50 @@
                                 <p>Misji wykonano: {{$stats->missions_completed}}</p>
                                 <p>Powiadomień odesłano: {{$stats->messages_sent}}</p>
                                 <hr>
+                                @if($user->id != Auth::id() && (!$user->is_admin)  && (Auth::user()->is_admin || Auth::user()->is_moderator))
+                                    @if(!($user->is_muted))
+                                        <form action="{{route('mute')}}" method="POST">
+                                            @method('PUT')
+                                            @csrf
+                                            <button class="btn-sm btn-outline-info" type="submit">Zmutuj
+                                            </button>
+                                            <input type="hidden" name="user_id" value="{{$user->id}}">
+                                        </form>
+                                    @else
+                                        <form action="{{route('unmute')}}" method="POST">
+                                            @method('PUT')
+                                            @csrf
+                                            <button class="btn-sm btn-outline-info" type="submit">Rozmutuj
+                                            </button>
+                                            <input type="hidden" name="user_id" value="{{$user->id}}">
+                                        </form>
+                                    @endif
+                                    @if(Auth::user()->is_admin)
+                                        @if(!($user->is_banned))
+                                            <form action="{{route('ban')}}" method="POST">
+                                                @method('PUT')
+                                                @csrf
+                                                <button class="btn-sm btn-outline-danger" type="submit">Zbanuj
+                                                </button>
+                                                <input type="hidden" name="user_id" value="{{$user->id}}">
+                                            </form>
+                                        @else
+                                            <form action="{{route('unban')}}" method="POST">
+                                                @method('PUT')
+                                                @csrf
+                                                <button class="btn-sm btn-outline-danger" type="submit">Rozbanuj
+                                                </button>
+                                                <input type="hidden" name="user_id" value="{{$user->id}}">
+                                            </form>
+                                        @endif
+                                    @endif
+                                @endif
                                 @if(!$is_friends)
                                     <form method="POST" action="{{route('add_friend')}}">
                                         @csrf
                                         <input name="id" type="hidden" value="{{$user->id}}">
-                                        <button type="submit" class="btn btn-success">Dodaj do swoich przyjaciół</button>
+                                        <button type="submit" class="btn btn-success">Dodaj do swoich przyjaciół
+                                        </button>
                                     </form>
                                 @else
                                     <form method="POST" action="{{route('delete_friend')}}">

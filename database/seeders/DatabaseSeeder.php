@@ -22,20 +22,20 @@ class DatabaseSeeder extends Seeder
             'password' => 'абвгдeжзиіїйклмонпрстуфхцшщьюя'
         ]);
         User::factory()->create([
-           'name' => 'Andriy',
-           'email' => 'limertoy@ukr.net',
+           'name' => 'Admin',
+           'email' => 'admin@email.com',
            'password' => '$2y$10$Hc0Gp5j0Yn5SKycPdTicCOgc/k/eVR.jliaoRRiWdSdUD79LPPKSK', //123123123
             'is_admin' => true,
         ]);
         User::factory()->create([
-            'name' => 'Limertoy',
-            'email' => 'adamovich_avav@ukr.net',
+            'name' => 'Moderator',
+            'email' => 'moder@email.com',
             'password' => '$2y$10$Hc0Gp5j0Yn5SKycPdTicCOgc/k/eVR.jliaoRRiWdSdUD79LPPKSK',
             'is_moderator' => true
         ]);
         User::factory()->create([
-            'name' => 'Limerkek',
-            'email' => 'limerkek@ukr.net',
+            'name' => 'User',
+            'email' => 'user@email.com',
             'password' => '$2y$10$Hc0Gp5j0Yn5SKycPdTicCOgc/k/eVR.jliaoRRiWdSdUD79LPPKSK'
         ]);
 
