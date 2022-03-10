@@ -618,41 +618,8 @@ class Game extends Component
                 $this->player = $temp;
             }
             $this->endTurn(true);
-        } else {
-            $fields = [$this->game->user1_field, $this->game->user2_field,
-                $this->game->user3_field, $this->game->user4_field];
-
-            $players = [$this->lobby->user1_id, $this->lobby->user2_id,
-                $this->lobby->user3_id, $this->lobby->user4_id];
-            $sum = 0;
-            $winner = 0;
-            for ($i = 0; $i < 4; $i++) {
-                if ($fields[$i] == null)
-                    $sum++;
-                else
-                    $winner = $players[$i];
-            }
-            if ($sum >= 3) {
-                $this->game->active_action = 'end_game';
-                $this->lobby->is_ended = 1;
-                $this->lobby->winner_id = $winner;
-
-                Stats::where('user_id', $this->lobby->winner_id)
-                    ->increment('games_won', 1);
-
-
-                for ($i = 0; $i < 4; $i++) {
-                    if ($players[$i] != null)
-                        Stats::where('user_id', $players[$i])
-                            ->increment('games_played', 1);
-                }
-
-                $this->lobby->save();
-                $this->game->save();
-
-                $this->createSystemMessage(Auth::user()->name . ' poddał się.');
-            }
         }
+
         return view('livewire.game');
     }
 
@@ -721,9 +688,6 @@ class Game extends Component
 
         if (!$next_player) {
             $this->game->active_action = 'winner';
-            $this->lobby->winner_id = Auth::id();
-            $this->lobby->is_ended = 1;
-            $this->lobby->save();
         } else {
             $this->game->active_action = 'dice_throwing';
             $this->game->active_player = $arr_player + 1;
