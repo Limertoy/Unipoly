@@ -1,10 +1,10 @@
 @extends('layouts.template')
 
-@section('title-text', 'Poczekalnie')
+@section('title-text', 'Pokoje')
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Poczekalnie') }}
+            {{ __('Pokoje') }}
         </h2>
     </x-slot>
 

@@ -22,7 +22,7 @@
                         Przyjaciele
                     </x-nav-link>
                     <x-nav-link :href="route('lobbies')" :active="request()->routeIs('lobbies')">
-                        Poczekalnie
+                        Pokoje
                     </x-nav-link>
                 </div>
             </div>
