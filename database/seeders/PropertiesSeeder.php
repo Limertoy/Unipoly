@@ -25,7 +25,7 @@ class PropertiesSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'name' => 'KSERO',
+                'name' => 'ХУЙ',
                 'price' => 50,
                 'rent' => 2,
                 'house1' => 10,

@@ -12,7 +12,7 @@
                     <div x-data="{ open: false }" style="display: inline-block">
                         <div class="cell-info user1" id="player1-info" @click="open = true">
                             <p id="player1-info_name" style="display:inline">{{$lobby->user1->name}}</p>
-                            <p id="player1-info_cash">{{$game_money->user1_money}} zł</p>
+                            <p id="player1-info_cash">{{$game_money->user1_money}} $</p>
                         </div>
                         <div x-show="open" @click.away="open = false" class="dropdown-content">
                             @if($lobby->user1_id == Auth::id() && !$lobby->is_started && !$lobby->is_ended)
@@ -38,7 +38,7 @@
                         <div class="cell-info user2" id="player2-info" @click="open = true">
                             <p id="player2-info_name" style="display:inline">{{$lobby->user2->name}}</p>
                             <br>
-                            <p id="player2-info_cash">{{$game_money->user2_money}} zł</p>
+                            <p id="player2-info_cash">{{$game_money->user2_money}} $</p>
                         </div>
                         <div x-show="open" @click.away="open = false" class="dropdown-content">
                             @if($lobby->user2_id == Auth::id() && !$lobby->is_started && !$lobby->is_ended)
@@ -66,7 +66,7 @@
                             <p id="player3-info_name" style="display:inline">{{$lobby->user3->name}} <p class='token'
                                                                                                         id="player3-info_token"></p>
                             <br>
-                            <p id="player3-info_cash">{{$game_money->user3_money}} zł</p>
+                            <p id="player3-info_cash">{{$game_money->user3_money}} $</p>
                         </div>
                         <div x-show="open" @click.away="open = false" class="dropdown-content">
                             @if($lobby->user3_id == Auth::id() && !$lobby->is_started && !$lobby->is_ended)
@@ -94,7 +94,7 @@
                             <p id="player4-info_name" style="display:inline">{{$lobby->user4->name}} <p class='token'
                                                                                                         id="player4-info_token"></p>
                             <br>
-                            <p id="player4-info_cash">{{$game_money->user4_money}} zł</p>
+                            <p id="player4-info_cash">{{$game_money->user4_money}} $</p>
                         </div>
                         <div x-show="open" @click.away="open = false" class="dropdown-content">
                             @if($lobby->user4_id == Auth::id() && !$lobby->is_started && !$lobby->is_ended)
@@ -147,8 +147,8 @@
                                             <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && $live_properties[$i]->rent)
                                                 <br>Opłata:<br> {{$live_properties[$i]->rent}}
                                                 @if($properties[$i]->family == 'webpage')x @else
-                                                    zł @endif @elseif($properties[$i]->type == 'field') <br>
-                                                {{$live_properties[$i]->price}}zł @endif </div>
+                                                    $ @endif @elseif($properties[$i]->type == 'field') <br>
+                                                {{$live_properties[$i]->price}}$ @endif </div>
                                     @endif
                                     <div class="player-tokens topSide">
                                         @if($game_items->user1_item && ($game->user1_field == $properties[$i]->id))
@@ -221,9 +221,9 @@
                                             <b>{{$properties[$i]->name}}</b>
                                             @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
                                                 <br>{{$live_properties[$i]->price}}
-                                                zł @elseif($live_properties[$i]->rent) <br>
+                                                $ @elseif($live_properties[$i]->rent) <br>
                                             Opłata: {{$live_properties[$i]->rent}}@if($properties[$i]->family == 'webpage')
-                                                x @else zł @endif @endif</div>
+                                                x @else $ @endif @endif</div>
                                         <div class="player-tokens leftSide">
                                             @if($game_items->user1_item && ($game->user1_field == $properties[$i]->id))
                                                 <span class="player-pawn"
@@ -331,8 +331,8 @@
                                             <b>{{$properties[$i]->name}}</b>
                                             @if($properties[$i]->type == 'field' && !$live_properties[$i]->rent)
                                                 <br>{{$live_properties[$i]->price}}
-                                                zł @elseif($live_properties[$i]->rent) <br>
-                                            Opłata: {{$live_properties[$i]->rent}}zł @endif </div>
+                                                $ @elseif($live_properties[$i]->rent) <br>
+                                            Opłata: {{$live_properties[$i]->rent}}$ @endif </div>
                                         <div class="player-tokens rightSide">
                                             @if($game_items->user1_item && ($game->user1_field == $properties[$i]->id))
                                                 <span class="player-pawn"
@@ -406,8 +406,8 @@
                                             class="firstLine firstLine-bottom rotation2">
                                             <b>{{$properties[$i]->name}}</b> @if($properties[$i]->type == 'field' && $live_properties[$i]->rent)
                                                 <br>Opłata:<br> {{$live_properties[$i]->rent}}
-                                                zł@elseif($properties[$i]->type == 'field') <br>
-                                                {{$live_properties[$i]->price}}zł
+                                                $@elseif($properties[$i]->type == 'field') <br>
+                                                {{$live_properties[$i]->price}}$
                                             @endif </div>
                                     @endif
                                     <div class="player-tokens bottomSide">
@@ -501,7 +501,7 @@
                         </div>
                     @elseif($game->active_action == 'must_pay_fine')
                         <div class="cell-info cell-roll">
-                            <p style="padding-top: 2vh">Musisz zapłacić mandat: {{$game->must_pay}}zł</p><br>
+                            <p style="padding-top: 2vh">Musisz zapłacić mandat: {{$game->must_pay}}$</p><br>
                             <form wire:submit.prevent="payFine" style="display: inline-block">
                                 <button class="btn btn-lg btn-success" style="width: 10vw;">Zapłać</button>
                             </form>
@@ -511,7 +511,7 @@
                         </div>
                     @elseif($game->active_action == 'must_pay')
                         <div class="cell-info cell-roll">
-                            <p style="padding-top: 2vh">Musisz zapłacić {{$game->must_pay}}zł za wynajem</p><br>
+                            <p style="padding-top: 2vh">Musisz zapłacić {{$game->must_pay}}$ za wynajem</p><br>
                             <form wire:submit.prevent="payFine" style="display: inline-block">
                                 <button class="btn btn-lg btn-success" style="width: 10vw;">Zapłać</button>
                             </form>
